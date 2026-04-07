@@ -98,7 +98,7 @@ function ProfileCard() {
 }
 
 function App() {
-  const [themePreference, setThemePreference] = useState<ThemePreference>('system')
+  const [, setThemePreference] = useState<ThemePreference>('system')
   const [theme, setTheme] = useState<Theme>('dark')
 
   useEffect(() => {
