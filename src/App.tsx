@@ -4,13 +4,7 @@ import './App.css'
 type Theme = 'light' | 'dark'
 type ThemePreference = Theme | 'system'
 
-type NavItem = {
-  label: string
-  href: string
-  isActive?: boolean
-}
-
-const NAV_ITEMS: NavItem[] = [
+const NAV_ITEMS = [
   { label: 'About', href: '/', isActive: true },
   { label: 'Projects', href: '/projects' },
   { label: 'Blog', href: '/blog' },
@@ -59,6 +53,24 @@ function SocialIcon({ kind }: { kind: 'github' | 'linkedin' }) {
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M6.94 8.5H3.56V20h3.38V8.5ZM5.25 3A1.96 1.96 0 0 0 3.3 4.96c0 1.08.86 1.96 1.93 1.96h.02c1.09 0 1.96-.88 1.96-1.96A1.95 1.95 0 0 0 5.25 3ZM20.7 12.88c0-3.53-1.88-5.17-4.4-5.17-2.03 0-2.94 1.14-3.45 1.94V8.5H9.47c.05.76 0 11.5 0 11.5h3.38v-6.42c0-.34.02-.68.12-.92.27-.68.88-1.39 1.91-1.39 1.35 0 1.89 1.05 1.89 2.58V20h3.38v-7.12Z" />
     </svg>
+  )
+}
+
+function ProfileCard() {
+  return (
+    <section className="profile-card" aria-label="Profile summary">
+      <h2 className="profile-card__title">Agatha Schneider</h2>
+      <p className="profile-card__bio">{BIO}</p>
+
+      <div className="profile-card__links" aria-label="Profile links">
+        <a href="#" className="profile-card__icon-link" aria-label="GitHub profile placeholder">
+          <SocialIcon kind="github" />
+        </a>
+        <a href="#" className="profile-card__icon-link" aria-label="LinkedIn profile placeholder">
+          <SocialIcon kind="linkedin" />
+        </a>
+      </div>
+    </section>
   )
 }
 
@@ -125,11 +137,7 @@ function App() {
   return (
     <div className="app-shell" style={themeVariables}>
       <header className="topbar">
-        <a className="brand-mark" href="/" aria-label="Open About page">
-          AS
-        </a>
-
-        <nav className="nav" aria-label="Main navigation">
+        <nav className="nav nav--centered" aria-label="Main navigation">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.label}
@@ -150,24 +158,13 @@ function App() {
           <div className="hero-copy">
             <h1>Software Developer</h1>
             <p className="hero-description">{BIO}</p>
-
-            <div className="social-links" aria-label="Social links">
-              <a href="#" className="social-link" aria-label="GitHub profile placeholder">
-                <SocialIcon kind="github" />
-                <span>GitHub</span>
-              </a>
-              <a href="#" className="social-link" aria-label="LinkedIn profile placeholder">
-                <SocialIcon kind="linkedin" />
-                <span>LinkedIn</span>
-              </a>
-            </div>
           </div>
 
           <aside className="hero-portrait" aria-label="Profile area">
             <div className="memoji-frame">
               <div className="memoji-placeholder">Memoji</div>
             </div>
-            <p className="portrait-name">Agatha Schneider</p>
+            <ProfileCard />
           </aside>
         </section>
 
