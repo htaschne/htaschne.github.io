@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import './App.css'
+import profileImg from './assets/profile.png'
 
 type Theme = 'light' | 'dark'
 type ThemePreference = Theme | 'system'
@@ -59,16 +60,26 @@ function SocialIcon({ kind }: { kind: 'github' | 'linkedin' }) {
 function ProfileCard() {
   return (
     <section className="profile-card" aria-label="Profile summary">
-      <h2 className="profile-card__title">Agatha Schneider</h2>
-      <p className="profile-card__bio">{BIO}</p>
+      <div className="profile-card__content">
+        <div className="profile-card__memoji-column">
+          <div className="profile-card__memoji-frame">
+            <img src={profileImg} alt="Profile" className="memoji-image" />
+          </div>
 
-      <div className="profile-card__links" aria-label="Profile links">
-        <a href="#" className="profile-card__icon-link" aria-label="GitHub profile placeholder">
-          <SocialIcon kind="github" />
-        </a>
-        <a href="#" className="profile-card__icon-link" aria-label="LinkedIn profile placeholder">
-          <SocialIcon kind="linkedin" />
-        </a>
+          <div className="profile-card__links" aria-label="Profile links">
+            <a href="#" className="profile-card__icon-link" aria-label="GitHub profile placeholder">
+              <SocialIcon kind="github" />
+            </a>
+            <a href="#" className="profile-card__icon-link" aria-label="LinkedIn profile placeholder">
+              <SocialIcon kind="linkedin" />
+            </a>
+          </div>
+        </div>
+
+        <div className="profile-card__copy">
+          <h2 className="profile-card__title">Agatha Schneider</h2>
+          <p className="profile-card__bio">{BIO}</p>
+        </div>
       </div>
     </section>
   )
@@ -160,9 +171,6 @@ function App() {
       <main className="page-layout">
         <section className="about-stack" aria-labelledby="github-graph-heading">
           <aside className="hero-portrait" aria-label="Profile area">
-            <div className="memoji-frame">
-              <div className="memoji-placeholder">Memoji</div>
-            </div>
             <ProfileCard />
           </aside>
 
