@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './App.css'
 
 type Theme = 'light' | 'dark'
@@ -95,7 +95,25 @@ function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
+    document.body.setAttribute('data-theme', theme)
+    document.documentElement.style.colorScheme = theme
+    document.body.style.colorScheme = theme
   }, [theme])
+
+  const themeVariables = useMemo(
+    () => ({
+      '--bg': theme === 'dark' ? 'rgb(30, 30, 30)' : 'rgb(230, 230, 230)',
+      '--surface': theme === 'dark' ? 'rgba(40, 40, 40, 0.84)' : 'rgba(255, 255, 255, 0.74)',
+      '--surface-strong': theme === 'dark' ? 'rgba(48, 48, 48, 0.96)' : 'rgba(255, 255, 255, 0.9)',
+      '--border': theme === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(25, 25, 25, 0.08)',
+      '--text': theme === 'dark' ? 'rgb(245, 245, 245)' : 'rgb(25, 25, 25)',
+      '--text-soft': theme === 'dark' ? 'rgba(245, 245, 245, 0.68)' : 'rgba(25, 25, 25, 0.72)',
+      '--accent': 'rgb(224, 76, 145)',
+      '--accent-soft': 'rgba(224, 76, 145, 0.12)',
+      '--shadow': theme === 'dark' ? '0 22px 56px rgba(0, 0, 0, 0.34)' : '0 18px 44px rgba(0, 0, 0, 0.08)',
+    }) as React.CSSProperties,
+    [theme],
+  )
 
   const toggleTheme = () => {
     const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark'
@@ -105,7 +123,7 @@ function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className="app-shell" style={themeVariables}>
       <header className="topbar">
         <a className="brand-mark" href="/" aria-label="Open About page">
           AS
