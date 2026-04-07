@@ -158,44 +158,39 @@ function App() {
       </div>
 
       <main className="page-layout">
-        <section className="hero-section">
-          <div className="hero-copy">
-            <h1>Software Developer</h1>
-            <p className="hero-description">{BIO}</p>
-          </div>
-
+        <section className="about-stack" aria-labelledby="github-graph-heading">
           <aside className="hero-portrait" aria-label="Profile area">
             <div className="memoji-frame">
               <div className="memoji-placeholder">Memoji</div>
             </div>
             <ProfileCard />
           </aside>
-        </section>
 
-        <section className="graph-section" aria-labelledby="github-graph-heading">
-          <div className="section-header">
-            <div>
-              <h2 id="github-graph-heading">Contribution Graph</h2>
-              <p className="section-subtitle">Recent GitHub activity</p>
+          <section className="graph-section">
+            <div className="section-header">
+              <div>
+                <h2 id="github-graph-heading">Contribution Graph</h2>
+                <p className="section-subtitle">Recent GitHub activity</p>
+              </div>
+
+              <a
+                href={`https://github.com/${GITHUB_USERNAME}`}
+                target="_blank"
+                rel="noreferrer"
+                className="section-link"
+              >
+                Open profile
+              </a>
             </div>
 
-            <a
-              href={`https://github.com/${GITHUB_USERNAME}`}
-              target="_blank"
-              rel="noreferrer"
-              className="section-link"
-            >
-              Open profile
-            </a>
-          </div>
-
-          <div className="graph-card">
-            <img
-              src={GITHUB_GRAPH_SRC}
-              alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
-              className="github-graph"
-            />
-          </div>
+            <div className="graph-card">
+              <img
+                src={GITHUB_GRAPH_SRC}
+                alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
+                className="github-graph"
+              />
+            </div>
+          </section>
         </section>
       </main>
     </div>

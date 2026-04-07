@@ -272,3 +272,128 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
+
+/* ===== About layout ===== */
+.page-layout {
+  width: min(100%, var(--max-width));
+  margin: 0 auto;
+  display: grid;
+  gap: 32px;
+}
+
+.about-stack {
+  display: grid;
+  grid-template-columns: minmax(280px, 320px) minmax(0, 1fr);
+  align-items: start;
+  gap: 32px;
+  direction: rtl;
+}
+
+.about-stack > * {
+  direction: ltr;
+}
+
+.hero-portrait {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  align-self: start;
+}
+
+.memoji-frame {
+  width: min(100%, 320px);
+  aspect-ratio: 1;
+  padding: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at top, rgba(224, 76, 145, 0.16), transparent 45%),
+    var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.memoji-placeholder {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  border-radius: 24px;
+  border: 1px dashed rgba(224, 76, 145, 0.42);
+  background: linear-gradient(180deg, rgba(224, 76, 145, 0.08), transparent);
+  color: var(--text-soft);
+}
+
+.graph-section {
+  display: grid;
+  gap: 22px;
+  align-self: start;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: clamp(1.6rem, 2vw, 2rem);
+  color: var(--text);
+}
+
+.section-subtitle {
+  margin: 8px 0 0;
+  color: var(--text-soft);
+}
+
+.section-link {
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(224, 76, 145, 0.18);
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.section-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(224, 76, 145, 0.12);
+}
+
+.graph-card {
+  padding: 22px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+.github-graph {
+  display: block;
+  width: 100%;
+  min-width: 760px;
+  height: auto;
+  filter: saturate(0.95);
+}
+
+@media (max-width: 900px) {
+  .about-stack {
+    grid-template-columns: 1fr;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .github-graph {
+    min-width: 680px;
+  }
+}
