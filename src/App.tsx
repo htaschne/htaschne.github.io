@@ -67,10 +67,22 @@ function ProfileCard() {
           </div>
 
           <div className="profile-card__links" aria-label="Profile links">
-            <a href="#" className="profile-card__icon-link" aria-label="GitHub profile placeholder">
+            <a
+              href="https://github.com/htaschne"
+              className="profile-card__icon-link"
+              aria-label="GitHub profile"
+              target="_blank"
+              rel="noreferrer"
+            >
               <SocialIcon kind="github" />
             </a>
-            <a href="#" className="profile-card__icon-link" aria-label="LinkedIn profile placeholder">
+            <a
+              href="https://www.linkedin.com/in/agatha-schneider-68400b172/"
+              className="profile-card__icon-link"
+              aria-label="LinkedIn profile"
+              target="_blank"
+              rel="noreferrer"
+            >
               <SocialIcon kind="linkedin" />
             </a>
           </div>
