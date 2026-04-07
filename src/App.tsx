@@ -168,11 +168,7 @@ function App() {
 
           <section className="graph-section">
             <div className="section-header">
-              <div>
-                <h2 id="github-graph-heading">Contribution Graph</h2>
-                <p className="section-subtitle">Recent GitHub activity</p>
-              </div>
-
+              <h2 id="github-graph-heading">Contribution Graph</h2>
               <a
                 href={`https://github.com/${GITHUB_USERNAME}`}
                 target="_blank"

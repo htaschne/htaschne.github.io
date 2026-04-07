@@ -65,7 +65,7 @@ img {
   width: min(92vw, 920px);
   margin: 10px auto 52px;
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: 20px;
 }
@@ -84,6 +84,8 @@ img {
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
   align-self: center;
+  grid-column: 2;
+  justify-self: center;
 }
 
 .theme-toggle-shell {
@@ -96,6 +98,8 @@ img {
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
+  grid-column: 3;
+  justify-self: end;
 }
 
 .nav {
