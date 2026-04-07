@@ -6,7 +6,7 @@ type Theme = 'light' | 'dark'
 type ThemePreference = Theme | 'system'
 
 const NAV_ITEMS = [
-  { label: 'About', href: '/', isActive: true },
+  { label: 'About', href: '/' },
   { label: 'Projects', href: '/projects' },
   { label: 'Blog', href: '/blog' },
 ]
@@ -145,6 +145,8 @@ function App() {
     window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
   }
 
+  const path = window.location.pathname
+
   return (
     <div className="app-shell" style={themeVariables}>
       <div className="topbar-row">
@@ -154,8 +156,8 @@ function App() {
               <a
                 key={item.label}
                 href={item.href}
-                className={`nav__link ${item.isActive ? 'nav__link--active' : ''}`}
-                aria-current={item.isActive ? 'page' : undefined}
+                className={`nav__link ${path === item.href ? 'nav__link--active' : ''}`}
+                aria-current={path === item.href ? 'page' : undefined}
               >
                 {item.label}
               </a>
@@ -167,35 +169,40 @@ function App() {
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
         </div>
       </div>
-
       <main className="page-layout">
-        <section className="about-stack" aria-labelledby="github-graph-heading">
-          <aside className="hero-portrait" aria-label="Profile area">
-            <ProfileCard />
-          </aside>
+        {path === '/' ? (
+          <section className="about-stack" aria-labelledby="github-graph-heading">
+            <aside className="hero-portrait" aria-label="Profile area">
+              <ProfileCard />
+            </aside>
 
-          <section className="graph-section">
-            <div className="section-header">
-              <h2 id="github-graph-heading">Contribution Graph</h2>
-              <a
-                href={`https://github.com/${GITHUB_USERNAME}`}
-                target="_blank"
-                rel="noreferrer"
-                className="section-link"
-              >
-                Open profile
-              </a>
-            </div>
+            <section className="graph-section">
+              <div className="section-header">
+                <h2 id="github-graph-heading">Contribution Graph</h2>
+                <a
+                  href={`https://github.com/${GITHUB_USERNAME}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="section-link"
+                >
+                  Open profile
+                </a>
+              </div>
 
-            <div className="graph-card">
-              <img
-                src={GITHUB_GRAPH_SRC}
-                alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
-                className="github-graph"
-              />
-            </div>
+              <div className="graph-card">
+                <img
+                  src={GITHUB_GRAPH_SRC}
+                  alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
+                  className="github-graph"
+                />
+              </div>
+            </section>
           </section>
-        </section>
+        ) : (
+          <section style={{ textAlign: 'center', padding: '80px 0' }}>
+            <h1>Soon™</h1>
+          </section>
+        )}
       </main>
     </div>
   )
