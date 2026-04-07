@@ -136,22 +136,26 @@ function App() {
 
   return (
     <div className="app-shell" style={themeVariables}>
-      <header className="topbar">
-        <nav className="nav nav--centered" aria-label="Main navigation">
-          {NAV_ITEMS.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className={`nav__link ${item.isActive ? 'nav__link--active' : ''}`}
-              aria-current={item.isActive ? 'page' : undefined}
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+      <div className="topbar-row">
+        <header className="topbar">
+          <nav className="nav nav--centered" aria-label="Main navigation">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className={`nav__link ${item.isActive ? 'nav__link--active' : ''}`}
+                aria-current={item.isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </header>
 
-        <ThemeToggle theme={theme} onToggle={toggleTheme} />
-      </header>
+        <div className="theme-toggle-shell" aria-label="Theme switcher area">
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
+        </div>
+      </div>
 
       <main className="page-layout">
         <section className="hero-section">
