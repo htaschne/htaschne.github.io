@@ -1,28 +1,46 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 type Theme = 'light' | 'dark'
-type Page = 'about' | 'projects' | 'blog'
+type ThemePreference = Theme | 'system'
 
-const NAV_ITEMS: Array<{ label: string; page: Page }> = [
-  { label: 'About', page: 'about' },
-  { label: 'Projects', page: 'projects' },
-  { label: 'Blog', page: 'blog' },
+type NavItem = {
+  label: string
+  href: string
+  isActive?: boolean
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { label: 'About', href: '/', isActive: true },
+  { label: 'Projects', href: '/projects' },
+  { label: 'Blog', href: '/blog' },
 ]
 
 const BIO = `Started watching random videos about programming and ended up falling in love with Computer Science. I’m passionate about software — how it works and how it’s built — and I spend my free time watching technology talks, coding, and pretending to play the guitar.`
 
+const THEME_STORAGE_KEY = 'portfolio-theme-preference'
+const GITHUB_USERNAME = 'htaschne'
+const GITHUB_GRAPH_SRC = `https://ghchart.rshah.org/e04c91/${GITHUB_USERNAME}`
+
+function getSystemTheme(): Theme {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
 function ThemeToggle({ theme, onToggle }: { theme: Theme; onToggle: () => void }) {
+  const isDark = theme === 'dark'
+
   return (
     <button
       type="button"
       className="theme-toggle"
       onClick={onToggle}
-      aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-      title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <span className="theme-toggle__track">
-        <span className={`theme-toggle__thumb theme-toggle__thumb--${theme}`} />
+        <span className={`theme-toggle__thumb ${isDark ? 'theme-toggle__thumb--dark' : 'theme-toggle__thumb--light'}`}>
+          <span className="theme-toggle__icon">{isDark ? '☾' : '☀'}</span>
+        </span>
       </span>
     </button>
   )
@@ -45,123 +63,121 @@ function SocialIcon({ kind }: { kind: 'github' | 'linkedin' }) {
 }
 
 function App() {
+  const [themePreference, setThemePreference] = useState<ThemePreference>('system')
   const [theme, setTheme] = useState<Theme>('dark')
-  const [currentPage, setCurrentPage] = useState<Page>('about')
 
   useEffect(() => {
+    const savedPreference = window.localStorage.getItem(THEME_STORAGE_KEY) as ThemePreference | null
+    const initialPreference = savedPreference === 'light' || savedPreference === 'dark' ? savedPreference : 'system'
+
+    setThemePreference(initialPreference)
+    setTheme(initialPreference === 'system' ? getSystemTheme() : initialPreference)
+
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
-    const applyTheme = (matchesDark: boolean) => {
-      setTheme(matchesDark ? 'dark' : 'light')
+    const handleChange = () => {
+      setTheme((currentTheme) => {
+        if ((window.localStorage.getItem(THEME_STORAGE_KEY) ?? 'system') !== 'system') {
+          return currentTheme
+        }
+        return getSystemTheme()
+      })
     }
 
-    applyTheme(mediaQuery.matches)
-
-    const handleChange = (event: MediaQueryListEvent) => {
-      applyTheme(event.matches)
+    if (typeof mediaQuery.addEventListener === 'function') {
+      mediaQuery.addEventListener('change', handleChange)
+      return () => mediaQuery.removeEventListener('change', handleChange)
     }
 
-    mediaQuery.addEventListener('change', handleChange)
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange)
-    }
+    mediaQuery.addListener(handleChange)
+    return () => mediaQuery.removeListener(handleChange)
   }, [])
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
 
-  const isAboutPage = useMemo(() => currentPage === 'about', [currentPage])
+  const toggleTheme = () => {
+    const nextTheme: Theme = theme === 'dark' ? 'light' : 'dark'
+    setTheme(nextTheme)
+    setThemePreference(nextTheme)
+    window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
+  }
 
   return (
     <div className="app-shell">
       <header className="topbar">
-        <div className="brand-mark" aria-label="Portfolio home">
+        <a className="brand-mark" href="/" aria-label="Open About page">
           AS
-        </div>
+        </a>
 
         <nav className="nav" aria-label="Main navigation">
           {NAV_ITEMS.map((item) => (
-            <button
-              key={item.page}
-              type="button"
-              className={`nav__link ${currentPage === item.page ? 'nav__link--active' : ''}`}
-              onClick={() => setCurrentPage(item.page)}
+            <a
+              key={item.label}
+              href={item.href}
+              className={`nav__link ${item.isActive ? 'nav__link--active' : ''}`}
+              aria-current={item.isActive ? 'page' : undefined}
             >
               {item.label}
-            </button>
+            </a>
           ))}
         </nav>
 
-        <ThemeToggle
-          theme={theme}
-          onToggle={() => setTheme((previousTheme) => (previousTheme === 'dark' ? 'light' : 'dark'))}
-        />
+        <ThemeToggle theme={theme} onToggle={toggleTheme} />
       </header>
 
-      <main className="page">
-        {isAboutPage ? (
-          <>
-            <section className="hero-card">
-              <div className="hero-copy">
-                <p className="eyebrow">About</p>
-                <h1>Software Developer</h1>
-                <p className="hero-description">{BIO}</p>
+      <main className="page-layout">
+        <section className="hero-section">
+          <div className="hero-copy">
+            <h1>Software Developer</h1>
+            <p className="hero-description">{BIO}</p>
 
-                <div className="social-links" aria-label="Social links">
-                  <a href="#" className="social-link" aria-label="GitHub">
-                    <SocialIcon kind="github" />
-                    <span>GitHub</span>
-                  </a>
-                  <a href="#" className="social-link" aria-label="LinkedIn">
-                    <SocialIcon kind="linkedin" />
-                    <span>LinkedIn</span>
-                  </a>
-                </div>
-              </div>
+            <div className="social-links" aria-label="Social links">
+              <a href="#" className="social-link" aria-label="GitHub profile placeholder">
+                <SocialIcon kind="github" />
+                <span>GitHub</span>
+              </a>
+              <a href="#" className="social-link" aria-label="LinkedIn profile placeholder">
+                <SocialIcon kind="linkedin" />
+                <span>LinkedIn</span>
+              </a>
+            </div>
+          </div>
 
-              <div className="hero-portrait">
-                <div className="memoji-placeholder">
-                  <span>Memoji</span>
-                </div>
-                <p className="portrait-name">Agatha Schneider</p>
-              </div>
-            </section>
+          <aside className="hero-portrait" aria-label="Profile area">
+            <div className="memoji-frame">
+              <div className="memoji-placeholder">Memoji</div>
+            </div>
+            <p className="portrait-name">Agatha Schneider</p>
+          </aside>
+        </section>
 
-            <section className="section-card">
-              <div className="section-heading-row">
-                <div>
-                  <p className="section-kicker">GitHub</p>
-                  <h2>Recent Contributions</h2>
-                </div>
-                <a
-                  href="https://github.com/htaschne"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="section-action"
-                >
-                  Open profile
-                </a>
-              </div>
+        <section className="graph-section" aria-labelledby="github-graph-heading">
+          <div className="section-header">
+            <div>
+              <h2 id="github-graph-heading">Contribution Graph</h2>
+              <p className="section-subtitle">Recent GitHub activity</p>
+            </div>
 
-              <div className="graph-placeholder" role="img" aria-label="GitHub contribution graph placeholder">
-                <div className="graph-placeholder__badge">Live graph comes next</div>
-                <p>
-                  We’ll wire your GitHub contribution graph here and recolor it with the portfolio accent instead of the default green.
-                </p>
-              </div>
-            </section>
-          </>
-        ) : (
-          <section className="section-card section-card--coming-soon">
-            <p className="section-kicker">{currentPage === 'projects' ? 'Projects' : 'Blog'}</p>
-            <h2>{currentPage === 'projects' ? 'Projects page' : 'Blog page'}</h2>
-            <p>
-              This route is reserved already. We can build the real page structure next without changing the overall shell.
-            </p>
-          </section>
-        )}
+            <a
+              href={`https://github.com/${GITHUB_USERNAME}`}
+              target="_blank"
+              rel="noreferrer"
+              className="section-link"
+            >
+              Open profile
+            </a>
+          </div>
+
+          <div className="graph-card">
+            <img
+              src={GITHUB_GRAPH_SRC}
+              alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
+              className="github-graph"
+            />
+          </div>
+        </section>
       </main>
     </div>
   )
