@@ -40,9 +40,9 @@ Once the interpolation polynomial was available, the problem became much more fa
 
 The highest point of the trajectory occurs when
 
-\\[
+$$
 h'(t)=0
-\\]
+$$
 
 Rather than differentiating everything symbolically, I evaluated the polynomial and approximated its derivatives numerically, then applied **Newton's Method** to solve for the root of the first derivative.
 
