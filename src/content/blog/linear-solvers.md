@@ -1,6 +1,6 @@
 ---
 title: "Solving Linear Systems in C"
-date: "2026-07-07"
+date: "2026-04-01"
 description: "Implementing Gaussian Elimination, Jacobi and Gauss-Seidel while modeling a probabilistic processor network."
 tags: ["Numerical Methods", "C", "Linear Algebra", "Algorithms"]
 readingTime: "5 min read"

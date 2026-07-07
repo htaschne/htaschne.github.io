@@ -1,6 +1,6 @@
 ---
 title: "Estimating the Maximum Height of a Projectile with Newton Interpolation"
-date: "2026-07-07"
+date: "2026-06-01"
 description: "Using Newton's divided differences to reconstruct a projectile's trajectory from discrete measurements."
 tags: ["Numerical Methods", "Python", "Interpolation", "Mathematics"]
 tldr: "Newton interpolation turned a small set of projectile measurements into a polynomial model that could be used to estimate the projectile's maximum height. The project connected divided differences, polynomial interpolation, and numerical optimization in a compact implementation."

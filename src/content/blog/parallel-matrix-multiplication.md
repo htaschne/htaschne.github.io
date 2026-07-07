@@ -1,6 +1,6 @@
 ---
 title: "Scaling Matrix Multiplication with MPI in Go"
-date: "2026-07-07"
+date: "2026-07-05"
 description: "Exploring distributed matrix multiplication in Go using MPI and analyzing how performance scales across multiple processes."
 tags: ["Go", "MPI", "Parallel Computing", "Distributed Systems", "Performance"]
 tldr: "Parallelizing matrix multiplication with MPI produced a major speedup over the sequential version, with the best result at eight processes. The experiment also showed that adding more processes is not always better, since communication and synchronization costs can eventually outweigh the benefits."
