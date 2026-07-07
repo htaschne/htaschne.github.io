@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import profileImg from '../assets/profile.png'
 import SocialIcon from './SocialIcon'
 
-const HERO_COPY = 'Building playful software for Apple platforms, learning, accessibility, and creative tools.'
+const HERO_COPY =
+  'Computer Science student and full-stack developer building web, systems, and interactive software.'
 
 function ProfileCard() {
   return (
@@ -36,7 +37,7 @@ function ProfileCard() {
         </div>
 
         <div className="profile-card__copy">
-          <p className="eyebrow">Software Engineer</p>
+          <p className="eyebrow">Computer Science Student</p>
           <h1 className="profile-card__title">Agatha Schneider</h1>
           <p className="profile-card__bio">{HERO_COPY}</p>
 

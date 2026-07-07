@@ -1,7 +1,7 @@
 ---
 title: "Graffitone"
 date: "2026-07-08"
-description: "Spatial graffiti for Apple Vision Pro."
+description: "A spatial graffiti prototype for visionOS."
 tags: ["Swift", "SwiftUI", "visionOS", "Spatial Computing"]
 platforms: ["visionOS"]
 status: "In Progress"
@@ -10,10 +10,10 @@ featured: true
 order: 1
 ---
 
-Graffitone explores graffiti as a spatial computing experience for Apple Vision Pro.
+Graffitone explores graffiti as a spatial computing experience.
 
 ## Focus
 
-- Sketching expressive marks in a spatial environment.
-- Designing playful creative tools for emerging Apple platforms.
-- Keeping interactions direct, tactile, and approachable.
+- Sketch expressive marks in a spatial environment.
+- Explore creative tools for spatial interfaces.
+- Keep interactions direct, tactile, and approachable.

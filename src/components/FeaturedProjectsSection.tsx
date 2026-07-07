@@ -23,7 +23,7 @@ function FeaturedProjectImage({ project }: { project: Project }) {
 
   return (
     <div className={`featured-project-card__media ${project.icon ? 'featured-project-card__media--icon' : ''}`}>
-      <img src={src} alt="" onError={() => setFailedSrc(src)} />
+      <img src={src} alt="" loading="lazy" decoding="async" onError={() => setFailedSrc(src)} />
     </div>
   )
 }

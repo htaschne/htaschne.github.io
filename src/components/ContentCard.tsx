@@ -17,7 +17,16 @@ function ContentCard({ item, href }: ContentCardProps) {
     <article className="content-card glass-card">
       <div className="content-card__body">
         <div className="content-card__header">
-          {iconSrc && <img src={iconSrc} alt="" className="content-card__icon" onError={(event) => event.currentTarget.remove()} />}
+          {iconSrc && (
+            <img
+              src={iconSrc}
+              alt=""
+              className="content-card__icon"
+              loading="lazy"
+              decoding="async"
+              onError={(event) => event.currentTarget.remove()}
+            />
+          )}
           <div className="content-card__heading">
             <div className="content-card__meta">
               <span>{isProject ? 'Project' : formatContentDate(item.date)}</span>

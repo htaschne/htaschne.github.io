@@ -3,24 +3,24 @@ import { projects } from '../lib/content'
 
 const focusItems = [
   {
-    title: 'Graffitone',
-    description: 'Spatial graffiti for Apple Vision Pro',
-    slug: 'graffitone',
+    title: 'Distributed Systems',
+    description: 'Matrix multiplication with MPI in Go',
+    href: '/blog/parallel-matrix-multiplication',
   },
   {
     title: 'Mimicards',
-    description: 'Offline-first flashcards with Drive sync',
-    slug: 'mimicards',
+    description: 'Offline-first flashcards with local files and Drive sync',
+    href: '/projects/mimicards',
   },
   {
     title: 'SinaLu',
-    description: 'Libras learning app on the App Store',
-    slug: 'sinalu',
+    description: 'Libras learning app published on the App Store',
+    href: '/projects/sinalu',
   },
 ]
 
 function CurrentFocusCard() {
-  const projectSlugs = new Set(projects.map((project) => project.slug))
+  const projectSlugs = new Set(projects.map((project) => `/projects/${project.slug}`))
 
   return (
     <section className="current-focus-card glass-card" aria-labelledby="current-focus-heading">
@@ -35,16 +35,16 @@ function CurrentFocusCard() {
             </>
           )
 
-          if (projectSlugs.has(item.slug)) {
+          if (item.href.startsWith('/blog/') || projectSlugs.has(item.href)) {
             return (
-              <Link key={item.slug} to={`/projects/${item.slug}`} className="current-focus-item">
+              <Link key={item.title} to={item.href} className="current-focus-item">
                 {content}
               </Link>
             )
           }
 
           return (
-            <div key={item.slug} className="current-focus-item current-focus-item--static">
+            <div key={item.title} className="current-focus-item current-focus-item--static">
               {content}
             </div>
           )

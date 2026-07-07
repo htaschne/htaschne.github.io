@@ -31,7 +31,7 @@ The master process is responsible for:
 - generating the input matrices;
 - distributing rows of matrix **A**;
 - broadcasting matrix **B**;
-- collecting the partial results.
+- collecting partial results.
 
 Each worker receives only a subset of the rows and computes its corresponding portion of the output matrix.
 
@@ -80,7 +80,7 @@ The computation itself became smaller for each worker, but the overhead of:
 
 - communication,
 - synchronization,
-- and process management
+- process management
 
 started to dominate the total execution time.
 
@@ -98,7 +98,7 @@ In practice, the best performance came from finding the right balance between co
 
 This project was my first opportunity to build and benchmark a distributed application using MPI.
 
-Beyond implementing matrix multiplication itself, it reinforced several important ideas:
+Beyond implementing matrix multiplication itself, it reinforced several practical ideas:
 
 - parallel algorithms are often simple—the communication isn't;
 - speedup alone doesn't tell the whole story;

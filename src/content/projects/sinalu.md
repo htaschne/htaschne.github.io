@@ -1,7 +1,7 @@
 ---
 title: "SinaLu"
 date: "2025-10-30"
-description: "A playful educational app that helps children learn Brazilian Sign Language (Libras) through interactive adventures."
+description: "An educational iOS app that helps children learn Brazilian Sign Language (Libras) through interactive activities."
 tags: ["Swift", "SwiftUI", "iOS", "Accessibility", "Education"]
 platforms: ["iOS"]
 status: "Released"
@@ -13,7 +13,7 @@ featured: true
 order: 3
 ---
 
-SinaLu is an educational iOS app designed to make learning **Brazilian Sign Language (Libras)** fun, approachable, and engaging for children. Players accompany **Lu**, an adventurous bunny, on a journey to complete a magical book by learning new signs through games, exploration, and interactive activities.
+SinaLu is an educational iOS app designed to make learning **Brazilian Sign Language (Libras)** approachable for children. Players accompany **Lu** on a journey to complete a magical book by learning new signs through games, exploration, and interactive activities.
 
 ## Features
 

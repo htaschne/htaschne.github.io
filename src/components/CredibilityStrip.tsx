@@ -1,8 +1,8 @@
 const highlights = [
-  'Apple Developer Academy',
-  'Claro Campus Mobile Finalist',
+  'Full-Stack Projects',
+  'Distributed Systems · Algorithms',
   'Published on the App Store',
-  'SwiftUI · React · TypeScript · visionOS',
+  'React · TypeScript · Swift · Go',
 ]
 
 function CredibilityStrip() {

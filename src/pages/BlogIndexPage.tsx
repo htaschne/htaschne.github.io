@@ -7,7 +7,7 @@ function BlogIndexPage() {
       <div className="page-heading">
         <p className="eyebrow">Notes</p>
         <h1 id="blog-heading">Blog</h1>
-        <p>Short writeups about projects, learning notes, and the things I am experimenting with.</p>
+        <p>Notes on systems, algorithms, product work, and implementation details.</p>
       </div>
 
       <div className="content-grid">

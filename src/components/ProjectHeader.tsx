@@ -16,7 +16,7 @@ function ProjectImage({ src, alt, className }: { src: string; alt: string; class
     return null
   }
 
-  return <img src={src} alt={alt} className={className} onError={() => setFailedSrc(src)} />
+  return <img src={src} alt={alt} className={className} loading="lazy" decoding="async" onError={() => setFailedSrc(src)} />
 }
 
 function ProjectHeader({ project }: ProjectHeaderProps) {

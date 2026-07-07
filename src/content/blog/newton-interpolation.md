@@ -6,6 +6,8 @@ tags: ["Numerical Methods", "Python", "Interpolation", "Mathematics"]
 featured: false
 ---
 
+> **Source code:** [github.com/htaschne/newton-interpolation](https://github.com/htaschne/newton-interpolation)
+
 Sometimes the most interesting part of a problem isn't finding an answer—it's reconstructing the function that produced the data.
 
 While taking **Numerical Methods**, I was given a simple challenge: estimate the maximum height reached by an artillery projectile. The catch was that there was no equation describing its trajectory. Instead, only a handful of measurements were available.
@@ -82,4 +84,4 @@ This exercise was a great reminder that numerical methods often begin with incom
 
 Newton interpolation is elegant because it transforms a collection of discrete samples into a function that can be analyzed just like any analytical model. Once the polynomial exists, techniques like root finding, differentiation, and optimization become available.
 
-It's a small example, but one that nicely illustrates how interpolation and numerical optimization complement each other.
+It's a small example, but one that illustrates how interpolation and numerical optimization complement each other.

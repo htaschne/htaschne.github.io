@@ -1,7 +1,7 @@
 ---
 title: "Mimivoice"
 date: "2026-06-23"
-description: "A voice training companion focused on making practice approachable, encouraging, and data-driven."
+description: "A voice training companion focused on approachable practice and clear visual feedback."
 tags: ["React", "TypeScript", "Audio", "Accessibility", "Learning"]
 icon: "/assets/mimivoice.png"
 featured: true
@@ -19,12 +19,12 @@ The long-term goal is to create a training environment that feels supportive ins
 
 Planned features include:
 
-- 🎙️ Live microphone analysis
-- 📈 Pitch and resonance visualization
-- 📚 Guided practice sessions
-- 💾 Progress tracking over time
-- 🎯 Personalized exercises
-- 🌙 A clean, distraction-free interface
+- Live microphone analysis.
+- Pitch and resonance visualization.
+- Guided practice sessions.
+- Progress tracking over time.
+- Personalized exercises.
+- A clean, distraction-free interface.
 
 ## Tech
 

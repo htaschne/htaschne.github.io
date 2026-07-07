@@ -42,6 +42,8 @@ function HomePage() {
             src={GITHUB_GRAPH_SRC}
             alt={`GitHub contribution graph for ${GITHUB_USERNAME}`}
             className="github-graph"
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </section>

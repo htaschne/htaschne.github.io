@@ -14,7 +14,16 @@ function CoverImage({ src, alt }: { src: string; alt: string }) {
     return null
   }
 
-  return <img src={src} alt={alt} className="blog-header__cover-image" onError={() => setVisible(false)} />
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className="blog-header__cover-image"
+      loading="lazy"
+      decoding="async"
+      onError={() => setVisible(false)}
+    />
+  )
 }
 
 function BlogHeader({ post }: BlogHeaderProps) {

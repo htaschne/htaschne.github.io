@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://htaschne.github.io/</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/projects</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/projects/graffitone</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/projects/mimicards</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/projects/mimivoice</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/projects/sinalu</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/blog</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/blog/newton-interpolation</loc>
+  </url>
+  <url>
+    <loc>https://htaschne.github.io/blog/parallel-matrix-multiplication</loc>
+  </url>
+</urlset>

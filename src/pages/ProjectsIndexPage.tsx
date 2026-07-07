@@ -7,7 +7,7 @@ function ProjectsIndexPage() {
       <div className="page-heading">
         <p className="eyebrow">Work</p>
         <h1 id="projects-heading">Projects</h1>
-        <p>Apps and experiments with a soft visual style, practical details, and a little personality.</p>
+        <p>Full-stack projects, systems experiments, and interactive tools with practical implementation details.</p>
       </div>
 
       <div className="content-grid">
