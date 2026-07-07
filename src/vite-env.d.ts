@@ -9,6 +9,7 @@ declare module 'virtual:portfolio-content' {
     tags: string[]
     body: string
     cover?: string
+    readingTime?: string
     icon?: string
     hero?: string
     appStore?: string

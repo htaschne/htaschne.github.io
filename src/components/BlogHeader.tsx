@@ -30,7 +30,10 @@ function BlogHeader({ post }: BlogHeaderProps) {
   return (
     <header className="blog-header glass-card">
       <div className="blog-header__copy">
-        <p className="eyebrow">{formatContentDate(post.date)}</p>
+        <p className="eyebrow">
+          {formatContentDate(post.date)}
+          {post.readingTime ? ` · ${post.readingTime}` : ''}
+        </p>
         <h1>{post.title}</h1>
         <p>{post.description}</p>
 

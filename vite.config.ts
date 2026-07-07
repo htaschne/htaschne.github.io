@@ -19,6 +19,7 @@ type ParsedContentEntry = {
   tags: string[]
   body: string
   cover?: string
+  readingTime?: string
   icon?: string
   hero?: string
   appStore?: string
@@ -172,9 +173,14 @@ async function loadMarkdownDirectory(contentRoot: string, kind: ContentKind) {
       }
     } else {
       const cover = asString(data.cover, '')
+      const readingTime = asString(data.readingTime, '')
 
       if (cover) {
         entry.cover = cover
+      }
+
+      if (readingTime) {
+        entry.readingTime = readingTime
       }
     }
 
