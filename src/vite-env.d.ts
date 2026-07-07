@@ -10,6 +10,8 @@ declare module 'virtual:portfolio-content' {
     body: string
     cover?: string
     readingTime?: string
+    tldr?: string
+    takeaways?: string[]
     icon?: string
     hero?: string
     appStore?: string

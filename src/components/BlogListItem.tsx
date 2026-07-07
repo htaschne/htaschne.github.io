@@ -11,6 +11,7 @@ type BlogListItemProps = {
 
 function BlogListItem({ post, isExpanded, onToggle }: BlogListItemProps) {
   const detailId = `blog-preview-${post.slug}`
+  const previewText = post.tldr ?? post.description
 
   function handleToggleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -49,22 +50,29 @@ function BlogListItem({ post, isExpanded, onToggle }: BlogListItemProps) {
 
       <div id={detailId} className="blog-list-item__preview" aria-hidden={!isExpanded}>
         <div className="blog-list-item__preview-inner">
-          <p>{post.description}</p>
-
-          <div className="blog-list-item__preview-meta">
-            {post.readingTime && <span className="blog-list-item__reading-time">{post.readingTime}</span>}
-            {post.tags.map((tag) => (
-              <span key={tag}>{tag}</span>
-            ))}
+          <div className="blog-list-item__tldr">
+            <span className="blog-list-item__tldr-label">TL;DR</span>
+            <p>{previewText}</p>
           </div>
 
-          <Link
-            to={`/blog/${post.slug}`}
-            className="pill-link blog-list-item__link"
-            tabIndex={isExpanded ? undefined : -1}
-          >
-            Read article
-          </Link>
+          {post.takeaways && post.takeaways.length > 0 && (
+            <ul className="blog-list-item__takeaways">
+              {post.takeaways.map((takeaway) => (
+                <li key={takeaway}>{takeaway}</li>
+              ))}
+            </ul>
+          )}
+
+          <div className="blog-list-item__footer">
+            {post.readingTime && <span className="blog-list-item__reading-time">{post.readingTime}</span>}
+            <Link
+              to={`/blog/${post.slug}`}
+              className="pill-link blog-list-item__link"
+              tabIndex={isExpanded ? undefined : -1}
+            >
+              Read article
+            </Link>
+          </div>
         </div>
       </div>
     </article>

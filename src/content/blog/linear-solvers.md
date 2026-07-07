@@ -4,6 +4,11 @@ date: "2026-07-07"
 description: "Implementing Gaussian Elimination, Jacobi and Gauss-Seidel while modeling a probabilistic processor network."
 tags: ["Numerical Methods", "C", "Linear Algebra", "Algorithms"]
 readingTime: "5 min read"
+tldr: "The processor carousel problem became much clearer after translating the probabilistic request flow into a system of linear equations. Implementing Gaussian Elimination, Jacobi, and Gauss-Seidel made it possible to compare direct and iterative approaches on the same model."
+takeaways:
+  - "The steady-state workload distribution can be represented as a linear system."
+  - "Gaussian Elimination gives a direct solution, while Jacobi and Gauss-Seidel build approximations iteratively."
+  - "The final repository presents the coursework as a clean C numerical methods project."
 featured: false
 ---
 

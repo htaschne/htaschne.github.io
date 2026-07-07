@@ -13,6 +13,8 @@ export type BlogPost = BaseContentEntry & {
   kind: 'blog'
   cover?: string
   readingTime?: string
+  tldr?: string
+  takeaways?: string[]
 }
 
 export type Project = BaseContentEntry & {

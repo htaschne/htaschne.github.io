@@ -20,6 +20,8 @@ type ParsedContentEntry = {
   body: string
   cover?: string
   readingTime?: string
+  tldr?: string
+  takeaways?: string[]
   icon?: string
   hero?: string
   appStore?: string
@@ -174,6 +176,8 @@ async function loadMarkdownDirectory(contentRoot: string, kind: ContentKind) {
     } else {
       const cover = asString(data.cover, '')
       const readingTime = asString(data.readingTime, '')
+      const tldr = asString(data.tldr, '')
+      const takeaways = asTags(data.takeaways)
 
       if (cover) {
         entry.cover = cover
@@ -181,6 +185,14 @@ async function loadMarkdownDirectory(contentRoot: string, kind: ContentKind) {
 
       if (readingTime) {
         entry.readingTime = readingTime
+      }
+
+      if (tldr) {
+        entry.tldr = tldr
+      }
+
+      if (takeaways.length > 0) {
+        entry.takeaways = takeaways
       }
     }
 
