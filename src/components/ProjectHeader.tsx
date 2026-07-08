@@ -27,7 +27,7 @@ function ProjectHeader({ project }: ProjectHeaderProps) {
   const heroSrc = resolveAssetUrl(project.hero)
 
   return (
-    <header className="project-header glass-card">
+    <header className="project-header glass-card" data-reveal>
       <div className="project-header__top">
         {iconSrc && (
           <div className="project-header__icon-shell" aria-hidden="true">

@@ -7,7 +7,7 @@ const HERO_COPY =
 
 function ProfileCard() {
   return (
-    <section className="profile-card glass-card" aria-label="Profile summary">
+    <section className="profile-card glass-card" aria-label="Profile summary" data-reveal>
       <div className="profile-card__content">
         <div className="profile-card__memoji-column">
           <div className="profile-card__memoji-frame">

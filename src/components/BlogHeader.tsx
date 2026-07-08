@@ -28,7 +28,7 @@ function CoverImage({ src, alt }: { src: string; alt: string }) {
 
 function BlogHeader({ post }: BlogHeaderProps) {
   return (
-    <header className="blog-header glass-card">
+    <header className="blog-header glass-card" data-reveal>
       <div className="blog-header__copy">
         <p className="eyebrow">
           {formatContentDate(post.date)}

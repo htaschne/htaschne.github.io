@@ -9,7 +9,7 @@ function BlogPostPage() {
 
   if (!post) {
     return (
-      <section className="empty-state glass-card">
+      <section className="empty-state glass-card" data-reveal>
         <p className="eyebrow">Missing article</p>
         <h1>That research article is not available.</h1>
         <Link to="/blog" className="pill-link">

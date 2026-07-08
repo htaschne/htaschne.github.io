@@ -4,7 +4,7 @@ import { projects } from '../lib/content'
 function ProjectsIndexPage() {
   return (
     <section className="index-page" aria-labelledby="projects-heading">
-      <div className="page-heading">
+      <div className="page-heading" data-reveal>
         <p className="eyebrow">Work</p>
         <h1 id="projects-heading">Software Engineering</h1>
         <p>

@@ -7,7 +7,7 @@ const highlights = [
 
 function CredibilityStrip() {
   return (
-    <section className="credibility-strip glass-card" aria-label="Portfolio highlights">
+    <section className="credibility-strip glass-card" aria-label="Portfolio highlights" data-reveal>
       {highlights.map((highlight) => (
         <span key={highlight} className="credibility-chip">
           {highlight}

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import type { KeyboardEvent } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import type { CSSProperties, KeyboardEvent } from 'react'
 import type { BlogPost } from '../lib/content'
 import { formatContentDate } from '../lib/date'
 
@@ -12,6 +13,31 @@ type BlogListItemProps = {
 function BlogListItem({ post, isExpanded, onToggle }: BlogListItemProps) {
   const detailId = `blog-preview-${post.slug}`
   const previewText = post.tldr ?? post.description
+  const previewInnerRef = useRef<HTMLDivElement | null>(null)
+  const [previewHeight, setPreviewHeight] = useState(0)
+
+  useLayoutEffect(() => {
+    const preview = previewInnerRef.current
+
+    if (!preview) {
+      return
+    }
+
+    const updatePreviewHeight = () => {
+      setPreviewHeight(preview.scrollHeight)
+    }
+
+    updatePreviewHeight()
+
+    const resizeObserver = new ResizeObserver(updatePreviewHeight)
+    resizeObserver.observe(preview)
+    window.addEventListener('resize', updatePreviewHeight)
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener('resize', updatePreviewHeight)
+    }
+  }, [post.description, post.readingTime, post.takeaways, previewText])
 
   function handleToggleKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
     if (event.key === 'Enter' || event.key === ' ') {
@@ -24,6 +50,7 @@ function BlogListItem({ post, isExpanded, onToggle }: BlogListItemProps) {
     <article
       className={`blog-list-item glass-card${isExpanded ? ' blog-list-item--expanded' : ''}`}
       role="listitem"
+      data-reveal
     >
       <button
         type="button"
@@ -48,8 +75,13 @@ function BlogListItem({ post, isExpanded, onToggle }: BlogListItemProps) {
         <span className="blog-list-item__indicator" aria-hidden="true" />
       </button>
 
-      <div id={detailId} className="blog-list-item__preview" aria-hidden={!isExpanded}>
-        <div className="blog-list-item__preview-inner">
+      <div
+        id={detailId}
+        className="blog-list-item__preview"
+        aria-hidden={!isExpanded}
+        style={{ '--blog-preview-height': `${previewHeight}px` } as CSSProperties}
+      >
+        <div className="blog-list-item__preview-inner" ref={previewInnerRef}>
           <div className="blog-list-item__tldr">
             <span className="blog-list-item__tldr-label">TL;DR</span>
             <p>{previewText}</p>

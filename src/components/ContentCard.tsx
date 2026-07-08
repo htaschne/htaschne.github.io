@@ -14,7 +14,7 @@ function ContentCard({ item, href }: ContentCardProps) {
   const iconSrc = isProject ? resolveAssetUrl(item.icon) : undefined
 
   return (
-    <article className="content-card glass-card">
+    <article className="content-card glass-card" data-reveal>
       <div className="content-card__body">
         <div className="content-card__header">
           {iconSrc && (

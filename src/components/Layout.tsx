@@ -2,6 +2,7 @@ import { useCallback, useLayoutEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import type { Theme } from '../App'
+import PageTransition from './PageTransition'
 import ThemeToggle from './ThemeToggle'
 
 type LayoutProps = {
@@ -151,9 +152,9 @@ function Layout({ theme, onThemeToggle }: LayoutProps) {
       </div>
 
       <main className="page-layout">
-        <div key={location.pathname} className="page-transition">
+        <PageTransition transitionKey={location.pathname}>
           <Outlet />
-        </div>
+        </PageTransition>
       </main>
     </>
   )

@@ -9,7 +9,7 @@ function ProjectPage() {
 
   if (!project) {
     return (
-      <section className="empty-state glass-card">
+      <section className="empty-state glass-card" data-reveal>
         <p className="eyebrow">Missing project</p>
         <h1>That software project is not available.</h1>
         <Link to="/projects" className="pill-link">

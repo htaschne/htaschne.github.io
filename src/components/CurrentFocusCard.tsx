@@ -24,7 +24,7 @@ function CurrentFocusCard() {
   const projectSlugs = new Set(projects.map((project) => `/projects/${project.slug}`))
 
   return (
-    <section className="current-focus-card glass-card" aria-labelledby="current-focus-heading">
+    <section className="current-focus-card glass-card" aria-labelledby="current-focus-heading" data-reveal>
       <h2 id="current-focus-heading">Current Focus</h2>
 
       <div className="current-focus-list">

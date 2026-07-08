@@ -9,7 +9,7 @@ type MarkdownViewProps = {
 
 function MarkdownView({ content }: MarkdownViewProps) {
   return (
-    <article className="markdown-view">
+    <article className="markdown-view" data-reveal>
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkMath]}
         rehypePlugins={[rehypeKatex]}

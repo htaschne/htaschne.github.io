@@ -21,7 +21,7 @@ function BlogIndexPage() {
 
   return (
     <section className="index-page blog-index-page" aria-labelledby="blog-heading">
-      <div className="page-heading">
+      <div className="page-heading" data-reveal>
         <p className="eyebrow">Research</p>
         <h1 id="blog-heading">Research</h1>
         <p>Technical write-ups accompanying software projects, experiments, and academic work.</p>

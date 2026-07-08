@@ -37,7 +37,7 @@ function FeaturedProjectsSection() {
 
   return (
     <section className="featured-projects-section" aria-labelledby="featured-projects-heading">
-      <div className="section-heading">
+      <div className="section-heading" data-reveal>
         <p className="eyebrow">Selected Work</p>
         <h2 id="featured-projects-heading">Featured Projects</h2>
       </div>
@@ -47,7 +47,7 @@ function FeaturedProjectsSection() {
           const badges = project.platforms?.length ? project.platforms : project.tags
 
           return (
-            <Link key={project.slug} to={`/projects/${project.slug}`} className="featured-project-card glass-card">
+            <Link key={project.slug} to={`/projects/${project.slug}`} className="featured-project-card glass-card" data-reveal>
               <FeaturedProjectImage project={project} />
 
               <div className="featured-project-card__copy">

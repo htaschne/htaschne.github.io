@@ -27,7 +27,7 @@ const latestResearch: LatestResearchEntry = {
 
 function LatestResearchSection({ entry = latestResearch }: { entry?: LatestResearchEntry }) {
   return (
-    <section className="latest-research-section glass-card" aria-labelledby="latest-research-heading">
+    <section className="latest-research-section glass-card" aria-labelledby="latest-research-heading" data-reveal>
       <div className="latest-research-section__header">
         <p className="eyebrow">Latest Research</p>
         <h2 id="latest-research-heading">{entry.title}</h2>
