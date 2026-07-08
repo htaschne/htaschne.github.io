@@ -251,7 +251,7 @@
 }
 
 .page-transition--home {
-  --reveal-duration: 620ms;
+  --reveal-duration: 560ms;
 }
 
 .page-transition [data-reveal] {

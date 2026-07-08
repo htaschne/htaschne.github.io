@@ -9,12 +9,10 @@ type PageTransitionProps = {
 
 const revealPresets = {
   default: {
-    staggerMs: 100,
-    maxStaggerMs: 500,
+    staggerMs: 90,
   },
   home: {
-    staggerMs: 145,
-    maxStaggerMs: 725,
+    staggerMs: 110,
   },
 }
 
@@ -26,7 +24,7 @@ function PageTransition({ children, transitionKey, variant = 'default' }: PageTr
     const preset = revealPresets[variant]
 
     revealItems?.forEach((item, index) => {
-      item.style.setProperty('--reveal-delay', `${Math.min(index * preset.staggerMs, preset.maxStaggerMs)}ms`)
+      item.style.setProperty('--reveal-delay', `${index * preset.staggerMs}ms`)
     })
   }, [transitionKey, variant])
 
