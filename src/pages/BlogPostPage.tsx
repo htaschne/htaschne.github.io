@@ -10,10 +10,10 @@ function BlogPostPage() {
   if (!post) {
     return (
       <section className="empty-state glass-card">
-        <p className="eyebrow">Missing post</p>
-        <h1>That blog post is not available.</h1>
+        <p className="eyebrow">Missing article</p>
+        <h1>That research article is not available.</h1>
         <Link to="/blog" className="pill-link">
-          Back to blog
+          Back to Research
         </Link>
       </section>
     )
@@ -22,7 +22,7 @@ function BlogPostPage() {
   return (
     <section className="detail-page">
       <Link to="/blog" className="back-link">
-        Back to blog
+        Back to Research
       </Link>
 
       <BlogHeader post={post} />

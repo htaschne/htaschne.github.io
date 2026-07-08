@@ -6,8 +6,11 @@ function ProjectsIndexPage() {
     <section className="index-page" aria-labelledby="projects-heading">
       <div className="page-heading">
         <p className="eyebrow">Work</p>
-        <h1 id="projects-heading">Projects</h1>
-        <p>Full-stack projects, systems experiments, and interactive tools with practical implementation details.</p>
+        <h1 id="projects-heading">Software Engineering</h1>
+        <p>
+          Software systems, applications, and developer tools built with a focus on performance, usability, and thoughtful
+          engineering.
+        </p>
       </div>
 
       <div className="content-grid">

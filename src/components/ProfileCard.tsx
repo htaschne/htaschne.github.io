@@ -43,7 +43,7 @@ function ProfileCard() {
 
           <div className="profile-card__actions">
             <Link to="/projects" className="primary-cta">
-              Explore Projects
+              Explore Software Engineering
             </Link>
           </div>
         </div>

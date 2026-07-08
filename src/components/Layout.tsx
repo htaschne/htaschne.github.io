@@ -9,8 +9,8 @@ type LayoutProps = {
 
 const navItems = [
   { label: 'About', href: '/', end: true },
-  { label: 'Projects', href: '/projects' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Software Engineering', href: '/projects' },
+  { label: 'Research', href: '/blog' },
 ]
 
 function Layout({ theme, onThemeToggle }: LayoutProps) {

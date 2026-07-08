@@ -11,9 +11,9 @@ function ProjectPage() {
     return (
       <section className="empty-state glass-card">
         <p className="eyebrow">Missing project</p>
-        <h1>That project is not available.</h1>
+        <h1>That software project is not available.</h1>
         <Link to="/projects" className="pill-link">
-          Back to projects
+          Back to Software Engineering
         </Link>
       </section>
     )
@@ -22,7 +22,7 @@ function ProjectPage() {
   return (
     <section className="detail-page">
       <Link to="/projects" className="back-link">
-        Back to projects
+        Back to Software Engineering
       </Link>
 
       <ProjectHeader project={project} />
