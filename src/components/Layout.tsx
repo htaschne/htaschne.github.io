@@ -53,6 +53,7 @@ function getPillStyle(link: HTMLElement | null, nav: HTMLElement | null): PillSt
 function Layout({ theme, onThemeToggle }: LayoutProps) {
   const location = useLocation()
   const activeIndex = getActiveNavIndex(location.pathname)
+  const transitionVariant = location.pathname === '/' ? 'home' : 'default'
   const navRef = useRef<HTMLElement | null>(null)
   const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
   const [hoverIndex, setHoverIndex] = useState<number | null>(null)
@@ -152,7 +153,7 @@ function Layout({ theme, onThemeToggle }: LayoutProps) {
       </div>
 
       <main className="page-layout">
-        <PageTransition transitionKey={location.pathname}>
+        <PageTransition transitionKey={location.pathname} variant={transitionVariant}>
           <Outlet />
         </PageTransition>
       </main>

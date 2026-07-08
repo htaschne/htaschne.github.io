@@ -53,7 +53,7 @@
 @keyframes reveal-fade-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
 
   to {
@@ -246,13 +246,18 @@
 }
 
 .page-transition {
-  animation: page-enter 160ms ease-out both;
+  --reveal-duration: 460ms;
+  animation: page-enter 180ms ease-out both;
+}
+
+.page-transition--home {
+  --reveal-duration: 620ms;
 }
 
 .page-transition [data-reveal] {
   opacity: 0;
-  transform: translateY(10px);
-  animation: reveal-fade-up 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform: translateY(12px);
+  animation: reveal-fade-up var(--reveal-duration) cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: var(--reveal-delay, 0ms);
   will-change: opacity, transform;
 }

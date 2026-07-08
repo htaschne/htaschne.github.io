@@ -4,24 +4,34 @@ import type { ReactNode } from 'react'
 type PageTransitionProps = {
   children: ReactNode
   transitionKey: string
+  variant?: 'default' | 'home'
 }
 
-const STAGGER_MS = 60
-const MAX_STAGGER_MS = 300
+const revealPresets = {
+  default: {
+    staggerMs: 100,
+    maxStaggerMs: 500,
+  },
+  home: {
+    staggerMs: 145,
+    maxStaggerMs: 725,
+  },
+}
 
-function PageTransition({ children, transitionKey }: PageTransitionProps) {
+function PageTransition({ children, transitionKey, variant = 'default' }: PageTransitionProps) {
   const containerRef = useRef<HTMLDivElement | null>(null)
 
   useLayoutEffect(() => {
     const revealItems = containerRef.current?.querySelectorAll<HTMLElement>('[data-reveal]')
+    const preset = revealPresets[variant]
 
     revealItems?.forEach((item, index) => {
-      item.style.setProperty('--reveal-delay', `${Math.min(index * STAGGER_MS, MAX_STAGGER_MS)}ms`)
+      item.style.setProperty('--reveal-delay', `${Math.min(index * preset.staggerMs, preset.maxStaggerMs)}ms`)
     })
-  }, [transitionKey])
+  }, [transitionKey, variant])
 
   return (
-    <div key={transitionKey} ref={containerRef} className="page-transition">
+    <div key={transitionKey} ref={containerRef} className={`page-transition page-transition--${variant}`}>
       {children}
     </div>
   )
