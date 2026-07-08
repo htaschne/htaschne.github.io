@@ -24,8 +24,10 @@ function CurrentFocusCard() {
   const projectSlugs = new Set(projects.map((project) => `/projects/${project.slug}`))
 
   return (
-    <section className="current-focus-card glass-card" aria-labelledby="current-focus-heading" data-reveal>
-      <h2 id="current-focus-heading">Current Focus</h2>
+    <section className="current-focus-card glass-card" aria-labelledby="current-focus-heading">
+      <h2 id="current-focus-heading" data-reveal>
+        Current Focus
+      </h2>
 
       <div className="current-focus-list">
         {focusItems.map((item) => {
@@ -38,14 +40,14 @@ function CurrentFocusCard() {
 
           if (item.href.startsWith('/blog/') || projectSlugs.has(item.href)) {
             return (
-              <Link key={item.title} to={item.href} className="current-focus-item">
+              <Link key={item.title} to={item.href} className="current-focus-item" data-reveal>
                 {content}
               </Link>
             )
           }
 
           return (
-            <div key={item.title} className="current-focus-item current-focus-item--static">
+            <div key={item.title} className="current-focus-item current-focus-item--static" data-reveal>
               {content}
             </div>
           )

@@ -7,14 +7,14 @@ const HERO_COPY =
 
 function ProfileCard() {
   return (
-    <section className="profile-card glass-card" aria-label="Profile summary" data-reveal>
+    <section className="profile-card glass-card" aria-label="Profile summary">
       <div className="profile-card__content">
         <div className="profile-card__memoji-column">
-          <div className="profile-card__memoji-frame">
+          <div className="profile-card__memoji-frame" data-reveal>
             <img src={profileImg} alt="Profile" className="memoji-image" />
           </div>
 
-          <div className="profile-card__links" aria-label="Profile links">
+          <div className="profile-card__links" aria-label="Profile links" data-reveal>
             <a
               href="https://github.com/htaschne"
               className="icon-button"
@@ -37,11 +37,17 @@ function ProfileCard() {
         </div>
 
         <div className="profile-card__copy">
-          <p className="eyebrow">Computer Science Student</p>
-          <h1 className="profile-card__title">Agatha Schneider</h1>
-          <p className="profile-card__bio">{HERO_COPY}</p>
+          <p className="eyebrow" data-reveal>
+            Computer Science Student
+          </p>
+          <h1 className="profile-card__title" data-reveal>
+            Agatha Schneider
+          </h1>
+          <p className="profile-card__bio" data-reveal>
+            {HERO_COPY}
+          </p>
 
-          <div className="profile-card__actions">
+          <div className="profile-card__actions" data-reveal>
             <Link to="/projects" className="primary-cta">
               Explore Software Engineering
             </Link>
