@@ -82,18 +82,6 @@ function App() {
         '--accent-soft': theme === 'dark' ? 'rgba(232, 88, 158, 0.18)' : 'rgba(232, 88, 158, 0.14)',
         '--accent-border': theme === 'dark' ? 'rgba(232, 88, 158, 0.34)' : 'rgba(196, 87, 255, 0.22)',
         '--code-bg': theme === 'dark' ? 'rgba(16, 13, 22, 0.72)' : 'rgba(255, 255, 255, 0.72)',
-        '--github-graph-panel': theme === 'dark' ? 'rgba(255, 255, 255, 0.06)' : 'rgba(255, 255, 255, 0.5)',
-        '--github-graph-panel-border':
-          theme === 'dark' ? 'rgba(255, 255, 255, 0.14)' : 'rgba(126, 72, 130, 0.14)',
-        '--github-graph-filter':
-          theme === 'dark'
-            ? 'invert(0.64) hue-rotate(80deg) saturate(1.78) brightness(1.2) contrast(1.16) drop-shadow(0 0 4px rgba(236, 101, 197, 0.18))'
-            : 'saturate(0.98)',
-        '--github-graph-opacity': '1',
-        '--github-graph-panel-shadow':
-          theme === 'dark'
-            ? 'inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.1)'
-            : 'inset 0 1px 0 rgba(255, 255, 255, 0.34)',
         '--shadow': theme === 'dark' ? '0 24px 70px rgba(0, 0, 0, 0.34)' : '0 24px 60px rgba(111, 63, 126, 0.14)',
         '--shadow-soft':
           theme === 'dark' ? '0 14px 34px rgba(0, 0, 0, 0.22)' : '0 14px 34px rgba(190, 103, 176, 0.12)',

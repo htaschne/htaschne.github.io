@@ -3,19 +3,20 @@ import { projects } from '../lib/content'
 
 const focusItems = [
   {
-    title: 'Distributed Systems',
-    description: 'Matrix multiplication with MPI in Go',
-    href: '/blog/parallel-matrix-multiplication',
+    title: 'Graffitone',
+    description: 'Spatial graffiti experience for visionOS combining painting, music, and immersive interaction.',
+    href: '/projects/graffitone',
+  },
+  {
+    title: "Skeen's Atomic Multicast",
+    description:
+      "Implementing and evaluating Skeen's atomic multicast protocol and the ACK-gated extension for atomic global order.",
+    href: '/blog/skeenkv',
   },
   {
     title: 'Mimicards',
-    description: 'Offline-first flashcards with local files and Drive sync',
+    description: 'Offline-first flashcards with local storage and Google Drive synchronization.',
     href: '/projects/mimicards',
-  },
-  {
-    title: 'SinaLu',
-    description: 'Libras learning app published on the App Store',
-    href: '/projects/sinalu',
   },
 ]
 
