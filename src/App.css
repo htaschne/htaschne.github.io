@@ -1418,6 +1418,54 @@
   box-shadow: var(--shadow-soft);
 }
 
+.markdown-view--blog-post {
+  --blog-post-prose-width: 49rem;
+
+  min-width: 0;
+  width: min(calc(100vw - 40px), 940px);
+  justify-self: center;
+}
+
+.markdown-view--blog-post > :where(h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, img) {
+  max-width: min(100%, var(--blog-post-prose-width));
+}
+
+.markdown-view--blog-post > :where(pre, .markdown-table-scroll, .katex-display) {
+  width: 100%;
+  max-width: 100%;
+}
+
+.markdown-view--blog-post > pre {
+  min-width: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.markdown-view--blog-post > .centered-diagram code {
+  display: block;
+  width: max-content;
+  max-width: none;
+  margin-inline: auto;
+  white-space: pre;
+  text-align: left;
+}
+
+.markdown-view--blog-post .markdown-table-scroll {
+  overflow-x: auto;
+  border-radius: 16px;
+}
+
+.markdown-view--blog-post .markdown-table-scroll table {
+  min-width: max-content;
+}
+
+.markdown-view--blog-post .katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.15rem;
+}
+
 .markdown-view > *:first-child {
   margin-top: 0;
 }
@@ -1562,6 +1610,10 @@
 
   .blog-list-item__toggle {
     grid-template-columns: 104px minmax(0, 1fr) 28px;
+  }
+
+  .markdown-view--blog-post {
+    width: min(calc(100vw - 28px), 940px);
   }
 }
 
@@ -1717,6 +1769,10 @@
 
   .latest-research-section__actions .pill-link {
     flex: 1 1 180px;
+  }
+
+  .markdown-view--blog-post {
+    width: 100%;
   }
 }
 

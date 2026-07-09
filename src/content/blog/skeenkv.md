@@ -63,24 +63,24 @@ In SkeenKV, timestamps are pairs: a logical clock value plus the partition ID, w
 
 A simplified run with three destinations looks like this:
 
-```text
-client/coordinator        P0              P1              P2
-        |                 |               |               |
-        | --- START ----> |               |               |
-        | --- START --------------------> |               |
-        | --- START ------------------------------------> |
-        |                 |               |               |
-        |                 | propose 4     | propose 7     | propose 5
-        |                 | ----- LOCAL_TS 4 ------------>|
-        |                 |<---- LOCAL_TS 7 --------------|
-        |                 |<---------------- LOCAL_TS 5 --|
-        |                 |               |               |
-        |                 | final = max(4, 7, 5) = 7      |
-        |                 | --- FINAL_TS 7 -------------->|
-        |                 |<---- FINAL_TS 7 --------------|
-        |                 |<---------------- FINAL_TS 7 --|
-        |                 |               |               |
-        |                 | deliver in final timestamp order
+```centered-diagram
+client / coordinator              P0                         P1                          P2
+        |                          |                          |                           |
+        | -------- START --------> |                          |                           |
+        | ------------------------------- START ------------> |                           |
+        | ---------------------------------------------------------- START -------------> |
+        |                          |                          |                           |
+        |                          | propose 4                | propose 7                 | propose 5
+        | <------ LOCAL_TS 4 ----- |                          |                           |
+        | <------------------------------ LOCAL_TS 7 -------- |                           |
+        | <--------------------------------------------------------- LOCAL_TS 5 --------- |
+        |                          |                          |                           |
+        | final = max(4, 7, 5) = 7 |                          |                           |
+        | -------- FINAL_TS 7 ---> |                          |                           |
+        | ------------------------------- FINAL_TS 7 -------> |                           |
+        | ---------------------------------------------------------- FINAL_TS 7 --------> |
+        |                          |                          |                           |
+        |                          | deliver in final timestamp order across destinations |
 ```
 
 No single node permanently owns the order for every operation. Each multicast group participates in ordering its own message. The tricky part is that every destination has only local knowledge: its queue, the proposals it has received, and the final timestamps it has learned. A delivery rule can look correct locally while still being too weak for a stronger global property.

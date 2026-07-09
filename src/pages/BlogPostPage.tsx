@@ -27,7 +27,7 @@ function BlogPostPage() {
 
       <BlogHeader post={post} />
 
-      <MarkdownView content={post.body} />
+      <MarkdownView content={post.body} className="markdown-view--blog-post" />
     </section>
   )
 }
