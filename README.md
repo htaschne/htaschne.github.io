@@ -1,4 +1,4 @@
-# Agatha Schneider Portfolio
+# Portfolio
 
 Personal portfolio for [htaschne.github.io](https://htaschne.github.io/).
 
