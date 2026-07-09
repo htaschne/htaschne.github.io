@@ -250,10 +250,6 @@
   animation: page-enter 180ms ease-out both;
 }
 
-.page-transition--home {
-  --reveal-duration: 560ms;
-}
-
 .page-transition [data-reveal] {
   opacity: 0;
   transform: translateY(12px);
@@ -281,8 +277,7 @@
 }
 
 .profile-card {
-  min-height: 100%;
-  padding: 24px;
+  padding: 20px 22px;
   border-radius: 34px;
   border-color: transparent;
   box-shadow:
@@ -292,20 +287,21 @@
 
 .profile-card__content {
   display: grid;
-  grid-template-columns: 168px minmax(0, 1fr);
-  align-items: center;
-  gap: 34px;
-}
-
-.profile-card__memoji-column {
-  display: grid;
-  justify-items: center;
-  gap: 16px;
+  grid-template-columns: 188px minmax(0, 1fr);
+  grid-template-areas:
+    'photo title'
+    'socials bio'
+    '. actions';
+  align-items: start;
+  column-gap: 34px;
+  row-gap: 10px;
 }
 
 .profile-card__memoji-frame {
   position: relative;
-  width: 168px;
+  grid-area: photo;
+  justify-self: center;
+  width: 184px;
   aspect-ratio: 1;
   padding: 7px;
   border-radius: 32px;
@@ -329,17 +325,19 @@
 
 .profile-card__links {
   display: flex;
+  grid-area: socials;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  align-self: start;
+  gap: 11px;
 }
 
 .icon-button {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 17px;
   color: var(--text);
   background: var(--surface-soft);
   border: 0;
@@ -357,13 +355,9 @@
 }
 
 .icon-button svg {
-  width: 18px;
-  height: 18px;
+  width: 19px;
+  height: 19px;
   fill: currentColor;
-}
-
-.profile-card__copy {
-  min-width: 0;
 }
 
 .eyebrow {
@@ -387,6 +381,13 @@
   line-height: 0.98;
 }
 
+.profile-card__title {
+  grid-area: title;
+  align-self: start;
+  font-size: clamp(2rem, 5.25vw, 3.9rem);
+  line-height: 1.04;
+}
+
 .profile-card__bio,
 .intro-panel p,
 .page-heading p,
@@ -400,28 +401,44 @@
 }
 
 .profile-card__bio {
-  margin: 16px 0 0;
-  max-width: 540px;
-  font-size: clamp(1.02rem, 2vw, 1.22rem);
+  grid-area: bio;
+  margin: 0;
+  max-width: 580px;
+  font-size: clamp(1.05rem, 2.05vw, 1.26rem);
+  transform: translateY(-14px);
+}
+
+.profile-card__bio p {
+  margin: 0;
+}
+
+.profile-card__bio p + p {
+  margin-top: 5px;
+}
+
+.profile-card__identity {
+  color: var(--text);
+  font-weight: 780;
 }
 
 .profile-card__actions {
   display: flex;
+  grid-area: actions;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 20px;
+  margin-top: 0;
 }
 
 .primary-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
-  padding: 0 20px;
+  min-height: 45px;
+  padding: 0 19px;
   border-radius: 999px;
   color: white;
-  font-size: 0.94rem;
+  font-size: 0.93rem;
   font-weight: 850;
   text-decoration: none;
   background: linear-gradient(135deg, var(--accent), var(--accent-strong));
@@ -446,9 +463,8 @@
 .intro-panel,
 .current-focus-card {
   display: flex;
-  min-height: 100%;
   flex-direction: column;
-  padding: 26px;
+  padding: 22px;
   border-radius: 34px;
 }
 
@@ -468,7 +484,7 @@
 
 .current-focus-card {
   justify-content: flex-start;
-  gap: 24px;
+  gap: 18px;
   border-color: transparent;
   box-shadow:
     var(--shadow),
@@ -483,13 +499,13 @@
 
 .current-focus-list {
   display: grid;
-  gap: 14px;
+  gap: 11px;
 }
 
 .current-focus-item {
   display: grid;
-  gap: 6px;
-  padding: 16px;
+  gap: 5px;
+  padding: 13px 14px;
   border-radius: 20px;
   color: var(--text);
   text-decoration: none;
@@ -521,7 +537,7 @@
 
 .current-focus-item__description {
   color: var(--text-soft);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1.45;
 }
 
@@ -1535,11 +1551,13 @@
   }
 
   .profile-card__content {
-    grid-template-columns: 160px minmax(0, 1fr);
+    grid-template-columns: 170px minmax(0, 1fr);
+    column-gap: 26px;
+    row-gap: 10px;
   }
 
   .profile-card__memoji-frame {
-    width: 160px;
+    width: 168px;
   }
 
   .blog-list-item__toggle {
@@ -1628,16 +1646,25 @@
 
   .profile-card__content {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      'photo'
+      'socials'
+      'title'
+      'bio'
+      'actions';
+    row-gap: 13px;
     text-align: center;
   }
 
-  .profile-card__copy {
-    text-align: center;
+  .profile-card,
+  .current-focus-card {
+    padding: 20px;
   }
 
   .profile-card__bio {
     margin-right: auto;
     margin-left: auto;
+    transform: none;
   }
 
   .profile-card__actions {
