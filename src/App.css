@@ -287,31 +287,24 @@
 
 .profile-card__content {
   display: grid;
-  grid-template-columns: 188px minmax(0, 1fr);
-  grid-template-areas:
-    'photo title'
-    'socials bio'
-    '. actions';
-  align-items: start;
-  column-gap: 34px;
-  row-gap: 10px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 38px);
 }
 
 .profile-card__memoji-frame {
   position: relative;
-  grid-area: photo;
-  justify-self: center;
-  width: 184px;
-  aspect-ratio: 1;
-  padding: 7px;
-  border-radius: 32px;
+  width: 100%;
+  aspect-ratio: 1.02;
+  overflow: hidden;
+  border-radius: 30px;
   background:
     linear-gradient(135deg, rgba(232, 88, 158, 0.28), rgba(196, 87, 255, 0.2)),
     var(--surface-soft);
-  border: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
-    0 18px 38px rgba(232, 88, 158, 0.14),
-    0 8px 18px rgba(36, 20, 48, 0.12),
+    0 18px 36px rgba(232, 88, 158, 0.14),
+    0 8px 18px rgba(36, 20, 48, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -320,16 +313,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 24px;
+  object-position: 52% 45%;
 }
 
 .profile-card__links {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
   display: flex;
-  grid-area: socials;
   align-items: center;
   justify-content: center;
-  align-self: start;
-  gap: 11px;
+  gap: 9px;
 }
 
 .icon-button {
@@ -337,11 +331,15 @@
   place-items: center;
   width: 44px;
   height: 44px;
-  border-radius: 17px;
-  color: var(--text);
-  background: var(--surface-soft);
-  border: 0;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  color: white;
+  background: rgba(20, 12, 32, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 12px 24px rgba(12, 8, 20, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
   transition:
     transform 0.16s ease,
     background-color 0.2s ease,
@@ -350,14 +348,23 @@
 
 .icon-button:hover {
   transform: translateY(-2px);
-  background: var(--accent-soft);
-  box-shadow: 0 12px 22px rgba(232, 88, 158, 0.16);
+  background: rgba(232, 88, 158, 0.5);
+  box-shadow:
+    0 14px 28px rgba(232, 88, 158, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.24);
 }
 
 .icon-button svg {
   width: 19px;
   height: 19px;
   fill: currentColor;
+}
+
+.profile-card__copy {
+  display: grid;
+  align-content: center;
+  gap: 14px;
+  min-width: 0;
 }
 
 .eyebrow {
@@ -382,8 +389,6 @@
 }
 
 .profile-card__title {
-  grid-area: title;
-  align-self: start;
   font-size: clamp(2rem, 5.25vw, 3.9rem);
   line-height: 1.04;
 }
@@ -401,11 +406,9 @@
 }
 
 .profile-card__bio {
-  grid-area: bio;
   margin: 0;
   max-width: 580px;
   font-size: clamp(1.05rem, 2.05vw, 1.26rem);
-  transform: translateY(-14px);
 }
 
 .profile-card__bio p {
@@ -423,11 +426,10 @@
 
 .profile-card__actions {
   display: flex;
-  grid-area: actions;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
-  margin-top: 0;
+  margin-top: 6px;
 }
 
 .primary-cta {
@@ -1599,13 +1601,12 @@
   }
 
   .profile-card__content {
-    grid-template-columns: 170px minmax(0, 1fr);
-    column-gap: 26px;
-    row-gap: 10px;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 24px;
   }
 
-  .profile-card__memoji-frame {
-    width: 168px;
+  .profile-card__copy {
+    gap: 12px;
   }
 
   .blog-list-item__toggle {
@@ -1698,13 +1699,7 @@
 
   .profile-card__content {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      'photo'
-      'socials'
-      'title'
-      'bio'
-      'actions';
-    row-gap: 13px;
+    gap: 18px;
     text-align: center;
   }
 
@@ -1716,7 +1711,6 @@
   .profile-card__bio {
     margin-right: auto;
     margin-left: auto;
-    transform: none;
   }
 
   .profile-card__actions {
@@ -1724,7 +1718,13 @@
   }
 
   .profile-card__memoji-frame {
-    width: min(210px, 72vw);
+    max-width: min(360px, 100%);
+    margin: 0 auto;
+  }
+
+  .profile-card__links {
+    bottom: 12px;
+    left: 12px;
   }
 
   .blog-list {
