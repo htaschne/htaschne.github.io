@@ -9,20 +9,19 @@ type LatestResearchEntry = {
 }
 
 const latestResearch: LatestResearchEntry = {
-  title:
-    "Implementing and Evaluating Skeen's Atomic Multicast Protocol and the ACK-Gated Extension for Atomic Global Order",
+  title: 'Building Hz, a Huffman Compressor for macOS',
   summary: [
-    "I implemented both the original Skeen atomic multicast protocol and the ACK-gated extension proposed by Pacheco et al. to experimentally evaluate their correctness and quantify the performance cost of stronger ordering guarantees.",
-    'The project includes deterministic protocol validation, configurable N-partition clusters, reproducible benchmarks, and artificial latency experiments.',
+    'I built Hz as a native macOS Huffman archiver, then used it to explore archive design, bit-level I/O, streaming compression, and Swift/Rust interoperability.',
+    'The project includes a Swift reference codec, a Rust native backend, bounded-memory streaming paths, reproducible benchmarks, and written notes on the archive format and implementation trade-offs.',
   ],
   highlights: [
-    'Original Skeen implementation',
-    'ACK-gated extension',
-    'Deterministic correctness validation',
-    'Benchmarked up to 5 partitions',
+    'SwiftUI macOS app',
+    'Custom .hz archive format',
+    'Rust native backend',
+    'Streaming and benchmarks',
   ],
-  articleHref: '/blog/skeenkv',
-  repositoryHref: 'https://github.com/htaschne/skeenkv',
+  articleHref: '/blog/hz',
+  repositoryHref: 'https://github.com/htaschne/hz',
 }
 
 function LatestResearchSection({ entry = latestResearch }: { entry?: LatestResearchEntry }) {
