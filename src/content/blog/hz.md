@@ -46,6 +46,42 @@ No separator is needed between codes because the tree makes the encoding prefix-
 
 That is the core of Hz. Count bytes, build a deterministic tree, encode through that tree, and store enough metadata so the decoder can rebuild the same structure later.
 
+## Try The Frequency Table
+
+Before there is a tree, there is just counting. Edit the text below and watch the weights change. Spaces are shown explicitly because a compressor sees them as real input too.
+
+```huffman-frequency
+```
+
+The takeaway is simple: Huffman coding starts by asking which symbols are worth making cheap.
+
+## Build The Tree
+
+The tree is built by repeatedly combining the two lightest nodes. The new parent goes back into the queue, and the process continues until there is only one root.
+
+```huffman-tree
+```
+
+That small loop is where the shape of the final codebook comes from.
+
+## Walk The Codes
+
+Once the tree exists, the codes fall out naturally. A left edge contributes `0`, a right edge contributes `1`, and the path from the root to a leaf becomes that character's code.
+
+```huffman-codes
+```
+
+The code table is generated from the same tree shown above. Nothing is hardcoded separately.
+
+## Encode The Text
+
+The final step is replacing each input character with its generated Huffman code and appending those bits into the payload.
+
+```huffman-encoding
+```
+
+This is also where a practical detail shows up: the payload can shrink while a tiny full archive still grows, because the decoder needs metadata such as the tree or frequency table.
+
 ## The First Version
 
 The first version was a SwiftUI app. I wanted something native and simple: drag in a file, choose where to save the compressed archive, and then drag the archive back in to decompress it.

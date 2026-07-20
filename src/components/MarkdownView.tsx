@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import rehypeKatex from 'rehype-katex'
 import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
+import HuffmanDemo from './huffman/HuffmanDemo'
 
 type MarkdownViewProps = {
   content: string
@@ -15,6 +16,27 @@ function isCenteredDiagramCode(children: unknown) {
   }
 
   return children.props.className?.split(' ').includes('language-centered-diagram') ?? false
+}
+
+function getCodeLanguage(children: unknown) {
+  if (!isValidElement<{ className?: string }>(children)) {
+    return undefined
+  }
+
+  return children.props.className?.split(' ').find((className) => className.startsWith('language-'))?.replace('language-', '')
+}
+
+function getHuffmanDemoKind(language: string | undefined) {
+  if (
+    language === 'huffman-frequency' ||
+    language === 'huffman-tree' ||
+    language === 'huffman-codes' ||
+    language === 'huffman-encoding'
+  ) {
+    return language.replace('huffman-', '') as 'frequency' | 'tree' | 'codes' | 'encoding'
+  }
+
+  return undefined
 }
 
 function MarkdownView({ content, className }: MarkdownViewProps) {
@@ -35,6 +57,13 @@ function MarkdownView({ content, className }: MarkdownViewProps) {
             )
           },
           pre({ children }) {
+            const language = getCodeLanguage(children)
+            const huffmanDemoKind = isBlogPost ? getHuffmanDemoKind(language) : undefined
+
+            if (huffmanDemoKind) {
+              return <HuffmanDemo kind={huffmanDemoKind} />
+            }
+
             const isCenteredDiagram = isBlogPost && isCenteredDiagramCode(children)
 
             return <pre className={isCenteredDiagram ? 'wide-diagram centered-diagram' : undefined}>{children}</pre>

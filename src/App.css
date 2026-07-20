@@ -196,6 +196,8 @@
 .current-focus-item:focus-visible,
 .featured-project-card:focus-visible,
 .blog-list-item__toggle:focus-visible,
+.huffman-demo button:focus-visible,
+.huffman-demo input:focus-visible,
 .theme-card__chip--link:focus-visible,
 .pill-link:focus-visible,
 .text-link:focus-visible,
@@ -1437,6 +1439,11 @@
   max-width: 100%;
 }
 
+.markdown-view--blog-post > .huffman-demo {
+  width: 100%;
+  max-width: 100%;
+}
+
 .markdown-view--blog-post > pre {
   min-width: 0;
   width: 100%;
@@ -1556,6 +1563,356 @@
   border: 1px solid var(--border);
 }
 
+.huffman-demo {
+  display: grid;
+  gap: 18px;
+  margin: 1.6rem 0;
+  padding: clamp(18px, 4vw, 26px);
+  border-radius: 24px;
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
+    var(--surface-soft);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+}
+
+.huffman-input-panel {
+  display: grid;
+  gap: 8px;
+}
+
+.huffman-input-panel label {
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 850;
+}
+
+.huffman-input-panel input {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border-radius: 14px;
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  outline: none;
+}
+
+.huffman-input-panel p,
+.huffman-demo__takeaway,
+.huffman-demo__limit,
+.huffman-demo__empty,
+.huffman-demo__warning,
+.tree-status,
+.huffman-code-panel p {
+  margin: 0;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+
+.huffman-input-panel p,
+.huffman-demo__limit {
+  font-size: 0.82rem;
+}
+
+.huffman-demo__warning {
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.frequency-chart {
+  display: grid;
+  gap: 10px;
+}
+
+.frequency-row {
+  display: grid;
+  grid-template-columns: minmax(74px, 0.3fr) minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 12px;
+}
+
+.frequency-row__symbol,
+.frequency-row__count,
+.encoding-symbol,
+.encoding-current strong,
+.encoding-stream code,
+.huffman-code-table code {
+  font-family: "SFMono-Regular", "Cascadia Code", "Roboto Mono", ui-monospace, monospace;
+}
+
+.frequency-row__symbol {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.86rem;
+  font-weight: 850;
+  text-overflow: ellipsis;
+}
+
+.frequency-row__track {
+  position: relative;
+  height: 16px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.frequency-row__bar {
+  position: absolute;
+  inset: 0 auto 0 0;
+  min-width: 8px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  transition: width 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.frequency-row__count {
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 850;
+  text-align: right;
+}
+
+.tree-controls {
+  display: grid;
+  gap: 12px;
+}
+
+.tree-controls__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tree-controls button,
+.encoding-symbol {
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.tree-controls button:hover:not(:disabled),
+.encoding-symbol:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+
+.tree-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.tree-stepper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tree-stepper__dot {
+  width: 28px;
+  min-height: 28px;
+  padding: 0;
+  font-size: 0.72rem;
+}
+
+.tree-stepper__dot--active,
+.encoding-symbol--active {
+  color: white;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong)) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.huffman-tree-frame {
+  overflow-x: auto;
+  border-radius: 18px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.huffman-tree {
+  display: block;
+  width: 100%;
+  min-width: 620px;
+  height: auto;
+}
+
+.huffman-tree-empty {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  color: var(--text-soft);
+}
+
+.huffman-tree__edge {
+  stroke: var(--border);
+  stroke-width: 2.5;
+  transition: stroke 0.22s ease;
+}
+
+.huffman-tree__edge--active {
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.huffman-tree__edge-label {
+  fill: var(--accent);
+  font-size: 16px;
+  font-weight: 850;
+  text-anchor: middle;
+}
+
+.huffman-tree__node circle {
+  fill: var(--surface-strong);
+  stroke: var(--border);
+  stroke-width: 2;
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease,
+    stroke-width 0.2s ease;
+}
+
+.huffman-tree__node text {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 850;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.huffman-tree__node .huffman-tree__weight {
+  fill: var(--text-soft);
+  font-size: 10px;
+}
+
+.huffman-tree__node--leaf circle {
+  fill: var(--surface-soft);
+}
+
+.huffman-tree__node--selected circle {
+  fill: var(--accent-soft);
+  stroke: var(--accent);
+  stroke-dasharray: 4 3;
+  stroke-width: 3;
+}
+
+.huffman-tree__node--combined circle,
+.huffman-tree__node--active circle {
+  fill: var(--accent-soft);
+  stroke: var(--accent);
+  stroke-width: 3;
+}
+
+.huffman-codes-grid,
+.encoding-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.huffman-code-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.huffman-code-table-wrap {
+  margin: 0;
+}
+
+.huffman-code-table th,
+.huffman-code-table td {
+  padding: 10px;
+  font-size: 0.86rem;
+}
+
+.huffman-code-table__row--active {
+  background: var(--accent-soft);
+}
+
+.encoding-source,
+.encoding-current,
+.encoding-stream,
+.bit-summary {
+  padding: 14px;
+  border-radius: 18px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+}
+
+.encoding-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.encoding-current {
+  display: grid;
+  gap: 6px;
+}
+
+.encoding-current span,
+.bit-summary span {
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.encoding-current strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.encoding-stream {
+  grid-column: 1 / -1;
+  overflow-x: auto;
+}
+
+.encoding-stream code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  padding: 0;
+  color: var(--accent);
+  overflow-wrap: normal;
+  white-space: nowrap;
+  background: transparent;
+  border: 0;
+}
+
+.bit-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.bit-summary div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.bit-summary strong {
+  color: var(--text);
+  font-size: 1rem;
+}
+
 .empty-state {
   display: grid;
   justify-items: start;
@@ -1615,6 +1972,15 @@
 
   .markdown-view--blog-post {
     width: min(calc(100vw - 28px), 940px);
+  }
+
+  .huffman-codes-grid,
+  .encoding-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bit-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1774,6 +2140,28 @@
   .markdown-view--blog-post {
     width: 100%;
   }
+
+  .huffman-demo {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .frequency-row {
+    grid-template-columns: minmax(58px, 0.32fr) minmax(0, 1fr) 32px;
+    gap: 8px;
+  }
+
+  .tree-controls__buttons button {
+    flex: 1 1 112px;
+  }
+
+  .huffman-tree {
+    min-width: 560px;
+  }
+
+  .bit-summary {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1803,5 +2191,13 @@
   .blog-list-item__preview-inner {
     transform: none !important;
     transition: opacity 90ms ease !important;
+  }
+
+  .frequency-row__bar,
+  .huffman-tree__edge,
+  .huffman-tree__node circle,
+  .tree-controls button,
+  .encoding-symbol {
+    transition: none !important;
   }
 }
