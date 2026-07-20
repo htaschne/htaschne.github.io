@@ -14,71 +14,79 @@ featured: false
 
 > **Source code:** [github.com/htaschne/linear-system-solvers](https://github.com/htaschne/linear-system-solvers)
 
-This project began as an assignment for my **Numerical Methods** course.
+This one began as a **Numerical Methods** assignment and then refused to stay as just an assignment.
 
-The challenge was not simply implementing linear solvers. The assignment described a fictional "processor carousel", a probabilistic system where requests circulate between processors until they are eventually completed.
+The prompt described a fictional "processor carousel", which is a very assignment-looking way to say: requests move between processors with certain probabilities until they eventually finish.
 
-Once the model was established, the problem stopped looking like a story about processors and started looking like a linear algebra problem. The expected workload of each processor could be described by a system of linear equations, and solving that system became the core implementation task.
+At first I treated it like a simulation problem. Then the model clicked into place and it became a linear algebra problem. Each processor had an expected workload, each workload depended on its neighbors, and the whole thing turned into a system of equations.
 
-After finishing the assignment, I decided to clean up the repository, improve the documentation, and publish it as a small portfolio project. I wanted it to show more than a finished exercise: I wanted the code to be readable, organized, and useful as a reference for classic numerical methods.
+After submitting it, I went back and cleaned up the repository. The original version worked, but it had that "written under deadline pressure" energy. I wanted the public version to be readable enough that future me could open it without immediately apologizing to myself.
 
 ## From Probabilities to Linear Algebra
 
-The processor carousel is easier to understand intuitively than formally.
+The processor carousel is easier to reason about once you stop imagining actual processors.
 
-Each processor can receive work, pass part of that work to its neighbors, or complete a request. Those transitions are controlled by predefined probabilities. Over time, if the system stabilizes, every processor reaches an expected workload that no longer changes from one step to the next.
+Each processor can receive work, pass some of it to neighboring processors, or complete a request. The probabilities are fixed. If the system stabilizes, each processor reaches an expected workload that stops changing.
 
-That steady state is what turns the problem into linear algebra.
+That steady state is the door into linear algebra.
 
-Instead of simulating request after request, we can express the long-term behavior of the system as equations. Each equation describes one processor in terms of the probabilities around it and the workloads of its neighbors. Put together, those equations form a linear system.
+Instead of simulating request after request, I could write one equation per processor. Each equation describes one workload in terms of the probabilities around it and the workloads of nearby processors.
 
-From there, the question becomes practical: how should the system be solved?
+Once the matrix exists, the story disappears. Now it is just:
+
+```text
+Ax = b
+```
+
+At that point the project became less about the carousel and more about how to solve the system cleanly in C.
 
 ## Three Different Approaches
 
-I implemented three solvers so I could compare direct and iterative approaches on the same problem.
+I implemented three solvers because the assignment asked for them, but also because comparing them side by side made the methods less abstract.
 
 ### Gaussian Elimination
 
-Gaussian Elimination is a direct method. It transforms the system into triangular form and then solves it through back substitution.
+Gaussian Elimination is the direct one. Transform the system into triangular form, then solve it with back substitution.
 
-What I like about this method is that it feels mechanical in the best way. Each step has a clear purpose: eliminate variables, simplify the system, and recover the solution.
+I like how mechanical it feels. Eliminate a variable. Move to the next row. Keep going. Then walk backward and recover the solution.
 
-It is also a good reminder that direct methods can be straightforward to reason about, but still require careful implementation details around indexing, pivoting, and numerical stability.
+Of course, "mechanical" does not mean "hard to mess up." Indexing still matters. Pivoting matters. Numerical stability is always waiting in the corner. C will also happily let you write nonsense if you ask politely.
 
 ### Jacobi Iteration
 
-Jacobi is an iterative method. Instead of transforming the whole system at once, it starts with an approximate solution and repeatedly improves it.
+Jacobi felt different because it does not try to solve everything at once.
 
-The important detail is that each new value is computed using values from the previous iteration. That makes the method conceptually clean: one full pass reads from the old estimate and writes a new one.
+Start with a guess. Compute a better guess. Repeat. Each new value uses values from the previous iteration, so the implementation naturally separates "old" and "new" arrays.
 
-It also makes convergence visible. You can watch the approximation move toward the final solution as the residual gets smaller.
+This made convergence visible in a way I liked. You can watch the residual shrink and see the approximation crawl toward the answer.
 
 ### Gauss-Seidel Iteration
 
-Gauss-Seidel is similar to Jacobi, but it immediately reuses newly computed values during the same iteration.
+Gauss-Seidel is Jacobi's slightly impatient sibling.
 
-That small difference changes the behavior of the algorithm. In many systems, Gauss-Seidel converges faster because each update can benefit from the work that just happened before it.
+It reuses newly computed values immediately during the same iteration. That small change can make it converge faster, because each update benefits from the work that just happened.
 
-Implementing both methods side by side made the distinction much clearer than just reading about it. Jacobi feels like updating in snapshots; Gauss-Seidel feels like updating in place.
+Implementing both methods made the difference much clearer than reading the definitions. Jacobi feels like updating in snapshots. Gauss-Seidel feels like updating in place.
+
+I probably understood that before writing the code, but I did not really feel it until I had both loops in front of me.
 
 ## Lessons Learned
 
-This project was a useful reminder that mathematical models often become software engineering problems.
+The main lesson was that the math is only half the project.
 
-The math identifies the structure of the solution, but the implementation still has to answer practical questions: how to represent matrices, how to separate input parsing from solving, how to keep the algorithms understandable, and how to verify that the output is correct.
+The model tells you that a linear system exists. The implementation still has to answer all the annoying practical questions: how to store matrices, how to parse input, how to separate the problem setup from the solvers, and how to check that the output is not quietly wrong.
 
-It also reinforced the value of separating modeling from implementation. The processor carousel defines the problem, but the solvers should not depend on that story. Once the matrix is built, Gaussian Elimination, Jacobi, and Gauss-Seidel can operate on the system as general algorithms.
+The cleanup after the assignment was useful because it forced that separation. The processor carousel defines one problem, but the solvers should not know or care about the story. Once `A` and `b` are built, Gaussian Elimination, Jacobi, and Gauss-Seidel can just operate on the system.
 
-That separation is what made the repository worth polishing. A university assignment can be more than a submission if the code is cleaned up, documented, and structured so someone else can learn from it.
+If I were doing it again, I would add more tests around edge cases and probably spend more time on pivoting behavior. Past me was focused on getting the methods working. Present me is more suspicious of numerical code that only passes the happy path.
 
 ## Repository
 
-The full implementation is available on GitHub:
+The cleaned-up implementation is available here:
 
 [github.com/htaschne/linear-system-solvers](https://github.com/htaschne/linear-system-solvers)
 
-The repository includes:
+It includes:
 
 - C implementation.
 - Gaussian Elimination.

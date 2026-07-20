@@ -13,9 +13,13 @@ featured: false
 
 > **Source code:** [github.com/htaschne/newton-interpolation](https://github.com/htaschne/newton-interpolation)
 
-Sometimes the most interesting part of a problem isn't finding an answer—it's reconstructing the function that produced the data.
+This started as a Numerical Methods assignment, which is usually how these things sneak onto my GitHub.
 
-While taking **Numerical Methods**, I was given a simple challenge: estimate the maximum height reached by an artillery projectile. The catch was that there was no equation describing its trajectory. Instead, only a handful of measurements were available.
+The problem looked simple enough: estimate the maximum height reached by a projectile. The annoying part was that there was no function for the trajectory. Just a few measured points and the expectation that I would somehow turn them into an answer.
+
+So the first job was not finding the maximum.
+
+It was inventing a reasonable function from the data.
 
 | Time (s) | Height (m) |
 |---------:|-----------:|
@@ -27,23 +31,27 @@ While taking **Numerical Methods**, I was given a simple challenge: estimate the
 | 29 | 2339 |
 | 31 | 1892 |
 
-Without an explicit function, the first step was to build one.
+Seven points. No equation. Enough information to make the problem interesting, but not enough to pretend this was physics in a clean vacuum.
 
 ## Newton Interpolation
 
-I used **Newton's divided differences interpolation**, which constructs a polynomial passing exactly through every measured point.
+I used **Newton's divided differences interpolation** to build a polynomial that passes through every provided point.
 
-Unlike expanding a polynomial directly, Newton's form builds it incrementally:
+The nice part of Newton's form is that it builds the polynomial incrementally. I did not have to start by expanding some giant expression by hand, which is good because past me has made enough indexing mistakes for one semester.
 
 - compute the divided differences table;
 - extract the coefficients from the first row;
 - evaluate the polynomial efficiently for any value of *t*.
 
-The result was a sixth-degree polynomial, since seven sample points were available.
+Because there were seven sample points, the interpolating polynomial ended up degree six.
+
+That sounds a little dramatic for a projectile, and it is. This is not a perfect physical model. It is a numerical reconstruction from sparse data. But for the assignment, that was exactly the point: take incomplete measurements and make them usable.
 
 ## Finding the Maximum
 
-Once the interpolation polynomial was available, the problem became much more familiar.
+Once the polynomial existed, the problem changed shape.
+
+Instead of staring at a table of heights, I could ask the usual calculus question: where does the derivative become zero?
 
 The highest point of the trajectory occurs when
 
@@ -51,9 +59,11 @@ $$
 h'(t)=0
 $$
 
-Rather than differentiating everything symbolically, I evaluated the polynomial and approximated its derivatives numerically, then applied **Newton's Method** to solve for the root of the first derivative.
+I could have differentiated everything symbolically, but I was already writing code and did not feel like turning the project into an algebra cleanup exercise. So I evaluated the polynomial, approximated derivatives numerically, and used **Newton's Method** to find the root of the first derivative.
 
-Starting from an initial guess near the visible peak, the algorithm quickly converged.
+Starting near the visible peak, it converged quickly.
+
+Honestly, this was the satisfying part. The table became a polynomial, the polynomial became a derivative, and the derivative gave back a time. Small numerical methods pipeline, but it actually felt like one.
 
 ## Result
 
@@ -62,31 +72,37 @@ The estimated maximum occurred at approximately
 - **Time:** 18.652473 s
 - **Height:** 3402.236046 m
 
-Considering that the original problem only provided discrete measurements, it was satisfying to recover a smooth approximation of the trajectory and use it to estimate quantities that weren't directly given.
+That number is not magic. It is the maximum of the interpolated polynomial, not a guarantee about the real projectile. Still, given only seven samples, getting a smooth curve and a plausible peak out of it was pretty neat.
 
 ## Verifying the Implementation
 
-One simple but important check was ensuring that the interpolation actually reproduced the original measurements.
+The first version of the code produced a number, which is always dangerous because numbers look official even when the program is wrong.
 
-Evaluating the polynomial at each known time produced the exact heights from the dataset, confirming that the divided differences table had been constructed correctly.
+So I added the obvious sanity check: evaluate the polynomial at the original sample times and make sure it returns the original heights.
+
+If the interpolation cannot reproduce the points it was built from, everything after that is just confidently wrong.
+
+That check passed, which made me trust the divided differences table enough to move on.
 
 ## Comparing with ChatGPT
 
-As part of the assignment, I also asked ChatGPT to solve the same problem using the provided data.
+The assignment also asked for a comparison with ChatGPT, so I gave it the same data and asked for the estimate.
 
-Interestingly, both approaches converged to exactly the same estimated maximum:
+Both approaches landed on the same values:
 
 | Quantity | Result |
 |----------|--------|
 | Time of maximum height | **18.652473 s** |
 | Maximum height | **3402.236046 m** |
 
-While that doesn't prove the interpolation is physically perfect, it provided additional confidence that the implementation was correct.
+That does not prove the model is physically perfect. It does suggest that my implementation and the independent calculation were doing the same thing, which is the kind of boring agreement I like in numerical code.
 
 ## Takeaways
 
-This exercise was a great reminder that numerical methods often begin with incomplete information. Instead of working from equations, we work from observations.
+The thing I liked about this assignment is that it started with missing information.
 
-Newton interpolation is elegant because it transforms a collection of discrete samples into a function that can be analyzed just like any analytical model. Once the polynomial exists, techniques like root finding, differentiation, and optimization become available.
+There was no clean function. There were only observations. Newton interpolation gave me a way to turn those observations into something I could evaluate, differentiate, and optimize.
 
-It's a small example, but one that illustrates how interpolation and numerical optimization complement each other.
+If I were doing this again outside an assignment, I would be more careful about the modeling assumptions and probably compare interpolation choices. A sixth-degree polynomial can behave badly outside the sampled range, and it is very easy to forget that when the output looks precise.
+
+Still, as a compact project, it connected the pieces nicely: divided differences, polynomial evaluation, numerical derivatives, Newton's Method, and verification. Not bad for a table of seven points.

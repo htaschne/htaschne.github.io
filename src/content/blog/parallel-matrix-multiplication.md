@@ -11,25 +11,29 @@ takeaways:
 featured: false
 ---
 
-Matrix multiplication is one of those classic problems that appears everywhere—from scientific computing and simulations to machine learning. It's also a great exercise for understanding parallel programming because the work can be divided naturally across multiple processors.
+Matrix multiplication is one of those problems that looks almost too perfect for parallel programming.
 
-For a recent assignment in **Parallel and Distributed Processing Fundamentals**, I implemented both a sequential and a distributed version of square matrix multiplication using **MPI in Go**, then benchmarked the implementation on the Atlântica cluster.
+Every output cell is just a dot product. Rows can be split up. The loops are obvious. You look at it and think, "This should scale nicely."
+
+So for a **Parallel and Distributed Processing Fundamentals** assignment, I implemented a sequential version and an MPI version in Go, then ran the benchmarks on the Atlântica cluster.
+
+This looked easy. It was mostly easy. Then the performance numbers started being more interesting than the code.
 
 ## The Problem
 
-The baseline algorithm is the familiar triple-loop matrix multiplication.
+The baseline was the familiar triple-loop matrix multiplication.
 
-Although straightforward, it has a time complexity of **O(n³)**, making it increasingly expensive as matrices grow larger.
+It is straightforward, but **O(n³)** gets rude very quickly.
 
-For the experiments, I used matrices of size:
+For the experiment I used square matrices of size:
 
 **5000 × 5000**
 
-Large enough that the benefits—and limitations—of parallelization become apparent.
+Large enough that the sequential version takes real time, and large enough that communication overhead has somewhere to hide.
 
 ## Parallelizing the Work
 
-The implementation follows a classic **Master–Worker** architecture.
+I used a classic **Master–Worker** layout.
 
 The master process is responsible for:
 
@@ -38,25 +42,29 @@ The master process is responsible for:
 - broadcasting matrix **B**;
 - collecting partial results.
 
-Each worker receives only a subset of the rows and computes its corresponding portion of the output matrix.
+Each worker receives a subset of rows from **A** and the full matrix **B**, then computes its slice of the result.
 
-Since each row of the result can be computed independently, the workload is naturally balanced with very little synchronization required during computation.
+The nice part is that rows of the output are independent. Once the worker has its inputs, it can mostly stay busy without talking to anyone.
+
+The less nice part is that **B** still has to be broadcast, and the result still has to come back. Distributed programs always find a way to make the "simple" part less simple.
 
 ## Verifying Correctness
 
-Performance is only meaningful if the results are correct.
+Before caring about speed, I needed to make sure the parallel version was not just producing fast garbage.
 
-To validate the implementation, I compared:
+I checked:
 
 - the four corner values of the resulting matrix;
 - a checksum of the entire matrix;
 - the sequential and parallel outputs.
 
-All executions produced identical results, giving confidence that the distributed computation behaved exactly like the sequential algorithm.
+All runs matched the sequential output.
+
+This is not the glamorous part of parallel programming, but it is the part that lets you sleep. A speedup number means nothing if the result matrix is wrong.
 
 ## Performance Results
 
-I executed the parallel implementation using different numbers of MPI processes on the Atlântica cluster and compared them against the sequential baseline.
+Then I ran the MPI version with different process counts and compared it with the sequential baseline.
 
 | Processes | Time (s) | Speedup |
 |----------:|---------:|--------:|
@@ -65,21 +73,27 @@ I executed the parallel implementation using different numbers of MPI processes 
 | 8 | 241.87 | 13.87× |
 | 16 | 268.30 | 12.50× |
 
-The most interesting result was the execution with **8 processes**, which reduced execution time from almost **56 minutes** to just over **4 minutes**.
+The best run was with **8 processes**. It cut the runtime from almost **56 minutes** to just over **4 minutes**.
+
+That was the moment where the assignment stopped feeling like a required benchmark table and started feeling like a real performance experiment.
 
 ## Superlinear Speedup?
 
-One surprising observation was that the runs with 4 and 8 processes achieved a **speedup greater than the number of processes**.
+The part I did not expect was the speedup.
 
-At first glance this seems impossible, but it's actually a well-known phenomenon called **superlinear speedup**.
+The 4-process and 8-process runs were faster than linear scaling would suggest. At first glance, that looks suspicious. My first reaction was basically: did I measure this wrong?
 
-A likely explanation is improved cache utilization.
+After checking the outputs and rerunning the experiment, the likely explanation was cache behavior.
 
-Instead of one process working with the entire dataset, each process manipulates only a fraction of the matrices. That smaller working set fits much better into the processor caches, reducing expensive memory accesses and allowing the application to outperform the theoretical linear expectation.
+Instead of one process dragging the entire workload through memory, each process worked on a smaller chunk. That smaller working set can fit better into cache, which reduces expensive memory access and can produce **superlinear speedup**.
+
+I love when benchmarks make me suspicious and then teach me something.
 
 ## When More Processes Stop Helping
 
-Interestingly, moving from **8 to 16 processes** actually made the program slower.
+Then I tried **16 processes**, because of course I did.
+
+It got slower.
 
 The computation itself became smaller for each worker, but the overhead of:
 
@@ -89,25 +103,25 @@ The computation itself became smaller for each worker, but the overhead of:
 
 started to dominate the total execution time.
 
-This is a good reminder that adding more parallelism doesn't always improve performance. Every distributed program has a point where coordination costs begin to outweigh the benefits.
+That was the useful correction to my intuition. More processes did not automatically mean more speed. At some point the work per process gets smaller, but the coordination costs do not politely disappear.
 
 ## Amdahl's Law in Practice
 
-This experiment also illustrates **Amdahl's Law**.
+This is where **Amdahl's Law** stops being a diagram from slides and starts being something you can feel in the numbers.
 
-Matrix multiplication is highly parallelizable, so most of the runtime benefits from additional processes. However, the sequential portions—data distribution, synchronization, and result collection—still place an upper bound on the achievable speedup.
+Matrix multiplication is highly parallelizable, but not every part of the program is computation. Data distribution, synchronization, and result collection still exist, and they limit how far scaling can go.
 
-In practice, the best performance came from finding the right balance between computation and communication rather than simply maximizing the number of processes.
+The best result came from balancing computation and communication, not from using the largest process count available.
 
 ## What I Learned
 
-This project was my first opportunity to build and benchmark a distributed application using MPI.
+This was my first real chance to build and benchmark an MPI program.
 
-Beyond implementing matrix multiplication itself, it reinforced several practical ideas:
+The code was not the hardest part. The harder part was learning to trust the numbers only after checking that the experiment was actually measuring what I thought it was measuring.
 
 - parallel algorithms are often simple—the communication isn't;
 - speedup alone doesn't tell the whole story;
 - cache effects can have a surprisingly large impact on performance;
 - measuring and analyzing results is just as important as writing the code.
 
-It was a fun exercise that connected concepts like MPI, scalability, cache locality, and Amdahl's Law into a single, practical project.
+If I did this again, I would collect more runs per process count and plot variance instead of relying on one table. This graph exists because I did not trust myself enough by the end, and honestly that instinct was probably correct.
